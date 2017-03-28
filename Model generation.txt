@@ -1,0 +1,27 @@
+rails g model Agency username:string password:digest email:string website:string
+
+rails g model Agency_Contact agency:references street_number:string street:string city:string state:string zip:string email:string
+
+rails g model User username:string password:digest email:string
+
+rails g model User_Contact user:references first:string last:string occupation:string street_number:string street:string city:string state:string zip:string phone:string email:string best_contact:string
+
+rails g model Family_Info user:references adults:integer children:integer home_type:string description:string landlord:string phone:string allergies:text agreement:boolean time:boolean
+
+rails g model Vet user:references have:boolean name:string clinic:string phone:string
+
+rails g model Other_Pet user:references number:integer type:text vacinated:boolean fixed:boolean lost:boolean discipline:text
+
+rails g model Animal agency:references name:string breed:string birthday:date gender:string weight: integer species:string adopted:boolean fostered:boolean
+
+rails g model Post animal:references agency:references description:text
+
+rails generate paperclip post image
+
+rails g model Comment post:references commenter_type:string commenter_id:integer comment:text
+
+rails g model Message agency:references user:references animal:references read:boolean subject:string message:text
+
+rails g model Adoption_Application animal:references agency:references user:references comments:text contacted:boolean interviewed:boolean approved:boolean accepted:boolean
+
+rails g model Foster_Application animal:references agency:references user:references comments:text contacted:boolean interviewed:boolean approved:boolean accepted:boolean
