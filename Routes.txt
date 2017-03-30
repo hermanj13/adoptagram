@@ -1,0 +1,89 @@
+SESSION
+Root-> / -> session#index
+Post -> /login -> session#login
+Post -> /register -> session#register
+Get -> /agency -> session#agency
+delete -> /logout -> session#logout
+
+rails g controller Session index login register agency logout
+
+
+
+AGENCY
+get -> /agency/:agencyID/dashboard -> agency#dashboard
+get -> /agency/:agencyID -> agency#show
+patch -> /agency/:agencyID -> agency#update
+get -> /agency/:agencyID/animal/all -> agency#all
+delete -> /agency/:agencyID -> agency#Destroy
+
+rails g controller Agency dashboard show update all destroy
+
+
+ANIMAL
+Post-> /agency/:agencyID/animal/ -> animal#create
+Get -> /agency/:agencyID/animal/:animalID -> animal#agency
+Patch -> /agency/:agencyID/animal/:animalID -> animal#update
+Get -> /animal/:animalID -> animal#show
+delete -> /animal/:animalID -> animal#Destroy
+
+rails g controller Animal create agency update show destroy
+
+POST
+POST -> /agency/:agencyID/animal/:animalID -> post#create
+PATCH -> /agency/:agencyID/animal/:animalID/post/:postID -> post#update
+delete -> /agency/:agencyID/animal/:animalID/post/:postID -> post#Destroy
+
+rails g controller Post create update destroy
+
+
+MESSAGE
+get -> /Agency/:agencyID/message -> message#agencyindex
+get -> /Agency/:agencyID/message/:messageID -> message#agencyshow
+post -> /Agency/:agencyID/message/:messageID -> message#agencyreply
+get -> /user/:userID/message -> message#userindex
+post -> /user/:userID/message -> message#usercreate
+get -> /user/:userID/message/:messageID -> message#usershow
+post -> /user/:userID/message/:messageID -> message#userreply
+
+rails g controller Message agency_index agency_show agency_reply user_index user_create user_show user_reply
+
+
+
+ADOPTION
+get -> /agency/:agencyID/adoption -> adoption#index
+POST -> /agency/:agencyID/adoption -> adoption#create
+get -> /agency/:agencyID/adoption/:adoptionID -> adoption#show
+Patch -> /agency/:agencyID/adoption/:adoptionID -> adoption#update
+patch -> /agency/:agencyID/adoption/:adoptionID/status -> adoption#status
+delete -> adoption/:adoptionID -> adoption#destroy
+
+rails g controller Adoption index create show update status destroy
+
+
+
+FOSTER
+get -> /agency/:agencyID/foster -> foster#index
+post -> /agency/:agencyID/foster -> foster#create
+get -> /agency/:agencyID/foster/:fosterID -> foster#show
+patch -> /agency/:agencyID/foster/:fosterID -> foster#update
+patch -> /agency/:agencyID/foster/:fosterID/status -> foster#status
+delete -> /foster/:fosterID -> foster#destroy
+
+rails g controller Foster index create show update status destroy
+
+
+USER
+get -> /dashboard -> user#dashboard
+get -> /user/:userID -> user#show
+post -> /user/:userID/contact -> user#createcontact
+post -> /user/:userID/family -> user#createfamily
+post -> /user/:userID/pet -> user#createpet
+post -> /user/:userID/vet -> user#createvet
+patch -> /user/:userID/contact -> user#updatecontact
+patch -> /user/:userID/family -> user#updatefamily
+patch -> /user/:userID/pet -> user#updatepet
+patch -> /user/:userID/vet -> user#updatevet
+destroy -> /user/:userID -> user#delete
+
+
+rails g controller User dashboard show create_contact create_family create_pet create_vet update_contact update_family update_pet update_vet delete

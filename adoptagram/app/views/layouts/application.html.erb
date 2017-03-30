@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Adoptagram</title>
+  <title><%= yield :title %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <script type="text/javascript">
+    <%= yield :javascript %>
+  </script>
 </head>
 <body>
+<div id="wrapper">
+  <div id="header">
+    <div id="leftheader">
+      <img id="logo" src="<%= asset_path 'logo.png' %>" />
+      <h1>Adoptagram</h1>
+    </div>
+    <div id="rightheader">
+      <div id="right-top">
+        <%= yield :right_top %>
+      </div>
+      <div id="right-bottom">
+        <% yield :right_bottom %>
+      </div>
+    </div>
+  </div>
 
 <%= yield %>
 
+</div>
 </body>
 </html>
