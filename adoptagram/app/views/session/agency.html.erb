@@ -1,2 +1,52 @@
-<h1>Session#agency</h1>
-<p>Find me in app/views/session/agency.html.erb</p>
+<% content_for :title, "Adoptagram | Login & Register" %>
+<% content_for :right_top do %>
+<form action="/login" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="type" value="agency">
+  <p>Username: <input name="username" type='text' /> Password: <input name="password" type='password' /> <input type="submit" value="Log In"/></p>
+</form>
+<% end %>
+
+<div id=body>
+  <div id="left">
+    <div id="welcome">
+      <p>
+        Spicy jalapeno bacon ipsum dolor amet venison short loin bacon pig, burgdoggen turkey meatloaf tail. Pancetta alcatra cow rump tenderloin kevin doner. Salami cow cupim sirloin, flank frankfurter capicola. Ham leberkas cupim beef swine kevin landjaeger filet mignon flank strip steak meatloaf. Pork belly biltong pork boudin venison meatloaf bacon turducken tail alcatra pancetta.
+      </p>
+    </div>
+  </div>
+  <div id="right">
+    <h3>Agency Registration</h3>
+    <form action="/register" method="post" id='register'>
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="type" value="agency">
+      <table>
+        <tr>
+          <td>Agency Name: </td>
+          <td><input type="text" name="name"/></td>
+        </tr>
+        <tr>
+          <td>Username: </td>
+          <td><input type="text" name="username"/></td>
+        </tr>
+        <tr>
+          <td>Password: </td>
+          <td><input type="password" name="password"/></td>
+        </tr>
+        <tr>
+          <td>Confirm Password: </td>
+          <td><input type="password" name="password_confirm"/></td>
+        </tr>
+        <tr>
+          <td>Email: </td>
+          <td><input type="text" name="email"/></td>
+        </tr>
+        <tr>
+          <td>Agency Website: </td>
+          <td><input type="text" name="website"/></td>
+        </tr>
+      </table>
+      <input type="submit" />
+    </form>
+  </div>
+</div>
