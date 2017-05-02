@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170330201613) do
+ActiveRecord::Schema.define(version: 20170502201113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,12 +21,12 @@ ActiveRecord::Schema.define(version: 20170330201613) do
     t.integer  "agency_id"
     t.integer  "user_id"
     t.text     "comments"
-    t.boolean  "contacted"
-    t.boolean  "interviewed"
-    t.boolean  "approved"
-    t.boolean  "accepted"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "contacted",   default: false
+    t.boolean  "interviewed", default: false
+    t.boolean  "approved",    default: false
+    t.boolean  "accepted",    default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "adoption_applications", ["agency_id"], name: "index_adoption_applications_on_agency_id", using: :btree
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 20170330201613) do
     t.string   "city"
     t.string   "state"
     t.string   "zip"
-    t.string   "email"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
@@ -63,13 +62,12 @@ ActiveRecord::Schema.define(version: 20170330201613) do
     t.string   "breed"
     t.date     "birthday"
     t.string   "gender"
-    t.string   "weight"
-    t.string   "integer"
     t.string   "species"
     t.boolean  "adopted"
     t.boolean  "fostered"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "weight"
   end
 
   add_index "animals", ["agency_id"], name: "index_animals_on_agency_id", using: :btree
@@ -107,12 +105,12 @@ ActiveRecord::Schema.define(version: 20170330201613) do
     t.integer  "agency_id"
     t.integer  "user_id"
     t.text     "comments"
-    t.boolean  "contacted"
-    t.boolean  "interviewed"
-    t.boolean  "approved"
-    t.boolean  "accepted"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "contacted",   default: false
+    t.boolean  "interviewed", default: false
+    t.boolean  "approved",    default: false
+    t.boolean  "accepted",    default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "foster_applications", ["agency_id"], name: "index_foster_applications_on_agency_id", using: :btree
@@ -123,11 +121,11 @@ ActiveRecord::Schema.define(version: 20170330201613) do
     t.integer  "agency_id"
     t.integer  "user_id"
     t.integer  "animal_id"
-    t.boolean  "read"
+    t.boolean  "read",       default: false
     t.string   "subject"
     t.text     "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "messages", ["agency_id"], name: "index_messages_on_agency_id", using: :btree
