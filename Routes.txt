@@ -87,3 +87,9 @@ destroy -> /user/:userID -> user#delete
 
 
 rails g controller User dashboard show create_contact create_family create_pet create_vet update_contact update_family update_pet update_vet delete
+
+Comment
+post -> /comment/:post_id
+destroy -> /comment/:comment_id
+
+rails g controller Comment create delete

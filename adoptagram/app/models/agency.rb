@@ -1,17 +1,17 @@
 class Agency < ActiveRecord::Base
-  has_many :animals
+  has_many :animals, dependent: :destroy
 
-  has_one :agency_contact
+  has_one :agency_contact, dependent: :destroy
 
-  has_many :messages
-  has_many :users_messaged, through: :messages, source: :user
+  has_many :messages, dependent: :destroy
+  has_many :users_messaged, through: :messages, source: :user, dependent: :destroy
 
-  has_many :comments, as: :commenter
+  has_many :comments, as: :commenter, dependent: :destroy
 
-  has_many :adoption_applications
-  has_many :foster_applications
+  has_many :adoption_applications, dependent: :destroy
+  has_many :foster_applications, dependent: :destroy
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
 
   has_secure_password
   URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/

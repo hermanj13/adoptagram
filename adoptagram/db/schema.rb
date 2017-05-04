@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502201113) do
+ActiveRecord::Schema.define(version: 20170504134531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,13 +45,13 @@ ActiveRecord::Schema.define(version: 20170502201113) do
 
   create_table "agency_contacts", force: :cascade do |t|
     t.integer  "agency_id"
-    t.string   "street_number"
-    t.string   "street"
+    t.string   "address1"
+    t.string   "address2"
     t.string   "city"
     t.string   "state"
     t.string   "zip"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "agency_contacts", ["agency_id"], name: "index_agency_contacts_on_agency_id", using: :btree
@@ -166,16 +166,16 @@ ActiveRecord::Schema.define(version: 20170502201113) do
     t.string   "first"
     t.string   "last"
     t.string   "occupation"
-    t.string   "street_number"
-    t.string   "street"
+    t.string   "address1"
+    t.string   "address2"
     t.string   "city"
     t.string   "state"
     t.string   "zip"
     t.string   "phone"
     t.string   "email"
     t.string   "best_contact"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "user_contacts", ["user_id"], name: "index_user_contacts_on_user_id", using: :btree

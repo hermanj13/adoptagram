@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   #animal#
   get '/animal/:animal_id' => 'animal#show'
   delete '/animal/:animal_id' => 'animal#destroy'
-  get '/agency/:agency_id/animal' => 'animal#create'
+  post '/agency/:agency_id/animal' => 'animal#create'
   get '/agency/:agency_id/animal/:animal_id' => 'animal#agency'
   patch '/agency/:agency_id/animal/:animal_id' => 'animal#update'
 
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   #adoption#
   get '/agency/:agency_id/adoption' => 'adoption#index'
-  post '/agency/:agency_id/adoption' => 'adoption#create'
+  post '/agency/:agency_id/adoption/:animal_id' => 'adoption#create'
   get '/agency/:agency_id/adoption/:adoption_id' => 'adoption#show'
   patch '/agency/:agency_id/adoption/:adoption_id' => 'adoption#update'
   patch '/agency/:agency_id/adoption/:adoption_id/status' => 'adoption#status'
@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
   #foster#
   get '/agency/:agency_id/foster' => 'foster#index'
-  post '/agency/:agency_id/foster' => 'foster#create'
+  post '/agency/:agency_id/foster/:animal_id' => 'foster#create'
   get '/agency/:agency_id/foster/:foster_id' => 'foster#show'
   patch '/agency/:agency_id/foster/:foster_id' => 'foster#update'
   patch '/agency/:agency_id/foster/:foster_id/status' => 'foster#status'
@@ -62,6 +62,10 @@ Rails.application.routes.draw do
   patch '/user/:user_id/pet' => 'user#update_pet'
   patch '/user/:user_id/vet' => 'user#update_vet'
   delete '/user/:user_id' => 'user#destroy'
+
+  #comments#
+  post 'comment/:post_id' => 'comment#create'
+  delete 'comment/:comment_id' => 'comment#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

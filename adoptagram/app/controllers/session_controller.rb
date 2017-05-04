@@ -1,4 +1,5 @@
 class SessionController < ApplicationController
+  skip_before_action :logged_in, except: [:logout]
   def index
   end
 
@@ -43,10 +44,9 @@ class SessionController < ApplicationController
     if params[:type] == "agency"
       agency = Agency.new(name: params[:name], username: params[:username], password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email], website: params[:website])
       if agency.save
-        login = Agency.find_by(username: params[:username])
-        session[:id] = login.id
+        session[:id] = agency.id
         session[:type] = "agency"
-        redirect_to "/agency/#{login.id}/dashboard"
+        redirect_to "/agency/#{agency.id}/dashboard"
       else
         flash[:notice] = agency.errors.full_messages
         redirect_to '/agency'
@@ -54,8 +54,7 @@ class SessionController < ApplicationController
     elsif params[:type] == "user"
       user = User.new(username: params[:username], password: params[:password], password_confirmation: params[:password_confirmation], email: params[:email])
       if user.save
-        login = User.find_by(username: params[:username])
-        session[:id] = login.id
+        session[:id] = user.id
         session[:type] = "user"
         redirect_to '/dashboard'
       else
