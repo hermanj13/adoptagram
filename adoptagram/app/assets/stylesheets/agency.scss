@@ -1,3 +1,37 @@
 // Place all the styles related to the Agency controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.post{
+  background: #ccc9a1;
+  margin: 15px auto 15px auto;
+  width: 600px;
+  text-align: center;
+  padding: 15px 0px 15px 0px;
+}
+#animal-top{
+  display: inline-flex;
+}
+
+#animal-top-left{
+  margin-right: 20px;
+}
+
+#animal-top-right{
+  text-align: left;
+  align-self: center;
+}
+
+#all-animal-table{
+  background: #ccc9a1;
+  margin: 15px auto 15px auto;
+  width: 90%;
+  align-content: center;
+  text-align: center;
+  padding: 15px 0px 15px 0px;
+}
+#animal-table{
+  margin: 15px auto;
+  width: 100%;
+}

@@ -34,6 +34,15 @@ class FosterController < ApplicationController
     end
   end
 
+  def foster
+    session[:return_to] ||= request.referer
+    animal = Animal.find(params[:animal_id])
+    animal.adopted = false
+    animal.fostered = true
+    animal.save
+    redirect_to session.delete(:return_to)
+  end
+
   def destroy
     application = FosterApplication.find(params[:foster])
     application.destroy

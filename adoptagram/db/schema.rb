@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504134531) do
+ActiveRecord::Schema.define(version: 20170504220906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,10 +63,10 @@ ActiveRecord::Schema.define(version: 20170504134531) do
     t.date     "birthday"
     t.string   "gender"
     t.string   "species"
-    t.boolean  "adopted"
-    t.boolean  "fostered"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "adopted",    default: false
+    t.boolean  "fostered",   default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "weight"
   end
 
@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 20170504134531) do
   add_foreign_key "messages", "users"
   add_foreign_key "other_pets", "users"
   add_foreign_key "posts", "agencies"
-  add_foreign_key "posts", "animals"
+  add_foreign_key "posts", "animals", on_delete: :cascade
   add_foreign_key "user_contacts", "users"
   add_foreign_key "vets", "users"
 end

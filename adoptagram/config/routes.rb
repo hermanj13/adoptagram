@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   post '/login' => 'session#login'
   post '/register' => 'session#register'
   get '/agency' => 'session#agency'
-  delete '/logout' => 'session#logout'
+  get '/logout' => 'session#logout'
 
   #agency#
   get '/agency/:agency_id' => 'agency#show'
-  patch '/agency/:agency_id' => 'agency#update'
+  post '/agency/:agency_id' => 'agency#update'
   delete '/agency/:agency_id' => 'agency#destroy'
   get '/agency/:agency_id/dashboard' => 'agency#dashboard'
   get '/agency/:agency_id/animal/all' => 'agency#all'
@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   delete '/animal/:animal_id' => 'animal#destroy'
   post '/agency/:agency_id/animal' => 'animal#create'
   get '/agency/:agency_id/animal/:animal_id' => 'animal#agency'
+  patch '/agency/:agency_id/animal/:animal_id/shelter' => 'animal#shelter'
   patch '/agency/:agency_id/animal/:animal_id' => 'animal#update'
 
   #post#
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
   get '/agency/:agency_id/adoption/:adoption_id' => 'adoption#show'
   patch '/agency/:agency_id/adoption/:adoption_id' => 'adoption#update'
   patch '/agency/:agency_id/adoption/:adoption_id/status' => 'adoption#status'
+  patch '/agency/:agency_id/animal/:animal_id/adopt' => 'adoption#adopt'
   delete '/adoption/:adoption_id' => 'adoption#destroy'
 
   #foster#
@@ -48,6 +50,7 @@ Rails.application.routes.draw do
   get '/agency/:agency_id/foster/:foster_id' => 'foster#show'
   patch '/agency/:agency_id/foster/:foster_id' => 'foster#update'
   patch '/agency/:agency_id/foster/:foster_id/status' => 'foster#status'
+  patch '/agency/:agency_id/animal/:animal_id/foster' => 'foster#foster'
   delete '/foster/:foster_id' => 'foster#destroy'
 
   #user#
@@ -65,7 +68,6 @@ Rails.application.routes.draw do
 
   #comments#
   post 'comment/:post_id' => 'comment#create'
-  delete 'comment/:comment_id' => 'comment#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

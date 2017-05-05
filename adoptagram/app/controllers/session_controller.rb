@@ -8,35 +8,35 @@ class SessionController < ApplicationController
 
   def login
     if params[:type] == "agency"
-      if agency = Agency.find_by(email: params[:email])
-      agency = agency.authenticate(params[:password])
+      if agency = Agency.find_by(username: params[:username])
+        agency = agency.authenticate(params[:password])
         if agency
           session[:id] = agency.id
           session[:type] = "agency"
-          redirect_to "/agency/#{login.id}/dashboard"
+          redirect_to "/agency/#{agency.id}/dashboard"
         else
           flash[:notice] = ["Invalid Password"]
           redirect_to "/agency"
         end
       else
-        flash[:notice] = ["Invalid Email"]
+        flash[:notice] = ["Invalid Username"]
         redirect_to "/agency"
       end
     elsif params[:type] == "user"
-        if user = user.find_by(email: params[:email])
+      if user = User.find_by(username: params[:username])
         user = user.authenticate(params[:password])
-          if user
-            session[:id] = user.id
-            session[:type] = "user"
-            redirect_to "/dashboard"
-          else
-            flash[:notice] = ["Invalid Password"]
-            redirect_to "/"
-          end
+        if user
+          session[:id] = user.id
+          session[:type] = "user"
+          redirect_to "/dashboard"
         else
-          flash[:notice] = ["Invalid Email"]
+          flash[:notice] = ["Invalid Password"]
           redirect_to "/"
         end
+      else
+        flash[:notice] = ["Invalid Username"]
+        redirect_to "/"
+      end
     end
   end
 

@@ -5,7 +5,7 @@ class UserController < ApplicationController
 
   def show
     ##add check for either user || agency with application pending#
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
   end
 
   def create_contact

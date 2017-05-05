@@ -1,2 +1,49 @@
-<h1>Agency#all</h1>
-<p>Find me in app/views/agency/all.html.erb</p>
+<div id='all-animal-table'>
+  <h1>All Animals</h1>
+  <table id='animal-table'>
+    <tr>
+      <th>Name</th>
+      <th>Birthday</th>
+      <th>Breed</th>
+      <th>Gender</th>
+      <th>Species</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    <% @agencyAnimals.each do |animal| %>
+    <tr>
+      <td>
+        <%= animal.name %>
+      </td>
+      <td>
+        <%= animal.birthday.strftime("%b %d, %Y") %>
+      </td>
+      <td>
+        <%= animal.breed %>
+      </td>
+      <td>
+        <%= animal.gender %>
+      </td>
+      <td>
+        <%= animal.species %>
+      </td>
+      <td>
+        <% if animal.adopted == true %>
+          Adopted
+        <% elsif animal.fostered == true %>
+          Fostered
+        <% else %>
+          At Shelter
+        <% end %>
+      </td>
+      <td>
+        <a href="/agency/<%= animal.agency.id %>/animal/<%= animal.id %>">Post</a>
+        <a href="/agency/<%= animal.agency.id %>/animal/<%= animal.id %>/adopt" data-method="patch" >Adopted</a>
+        <a href="/agency/<%= animal.agency.id %>/animal/<%= animal.id %>/foster" data-method="patch" >Fostered</a>
+        <a href="/agency/<%= animal.agency.id %>/animal/<%= animal.id %>/shelter" data-method="patch" >At Shelter</a>
+        <a href="/animal/<%= animal.id%>" data-method="delete">Delete</a>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

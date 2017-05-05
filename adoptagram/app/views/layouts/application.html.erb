@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title><%= yield :title %></title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<div id="wrapper">
-  <div id="header">
-    <div id="leftheader">
-      <img id="logo" src="<%= asset_path 'logo.png' %>" />
-      <h1>Adoptagram</h1>
-    </div>
-    <div id="rightheader">
-      <div id="right-top">
-        <%= yield :right_top %>
+  <head>
+    <title><%= yield :title %></title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <div id="leftheader">
+          <img id="logo" src="<%= asset_path 'logo.png' %>" />
+          <h1>Adoptagram</h1>
+        </div>
+        <div id="rightheader">
+          <div id="right-top">
+            <% if session[:type] && session[:type] == "agency" %>
+              <h2>Welcome <%= current_user.name %></h2>
+            <% elsif session[:type] && session[:type] == "user" %>
+              <h2>Welcome <%= current_user.username %></h2>
+            <% elsif !session[:type] %>
+              <%= yield :right_top %>
+            <%end %>
+          </div>
+          <div id="right-bottom">
+            <% if session[:type] && session[:type] == "agency" %>
+              <p><a href="/agency/<%= current_user.id %>/dashboard">Dashboard</a> | <a href="/agency/<%= current_user.id %>/foster">Foster Application</a> | <a href="/agency/<%= current_user.id %>/adoption">Adoption Applicaiton</a> | <a href="/agency/<%= current_user.id %>/message">Messages</a> | <a href="/agency/<%= current_user.id %>/animal/all">All Animals</a> | <a href="/logout">Logout</a></p>
+            <% elsif session[:type] && session[:type] == "user" %>
+              <p><a href="/user/<%= current_user.id %>/message">Messages</a> | <a href="/user/<%= current_user.id %>">Application Info</a> | <a href="/logout">Logout</a></p>
+            <% elsif !session[:type] %>
+              <%= yield :right_bottom %>
+            <%end %>
+          </div>
+        </div>
       </div>
-      <div id="right-bottom">
-        <% yield :right_bottom %>
-      </div>
+      <%= yield %>
     </div>
-  </div>
-
-<%= yield %>
-
-</div>
-</body>
+  </body>
 </html>

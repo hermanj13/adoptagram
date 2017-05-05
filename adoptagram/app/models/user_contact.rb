@@ -4,7 +4,6 @@ class UserContact < ActiveRecord::Base
   URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/
 
   validates :first, :last, :occupation, :address1, :city, :state, :phone, :best_contact, presence: true
-  validates :address2, allow_blank: true
   validates :zip, presence: true, format: { with: zip_regex }, length: {is: 5}
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: URL_REGEX }
 

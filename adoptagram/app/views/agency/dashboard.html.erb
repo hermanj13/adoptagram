@@ -1,2 +1,169 @@
-<h1>Agency#dashboard</h1>
-<p>Find me in app/views/agency/dashboard.html.erb</p>
+<div class="wall">
+  <% if !current_user.agency_contact %>
+  <div class="post">
+    <h4>Enter Your Agency Location Information!</h4>
+    <form id="agency-contact" action="/agency/<%= current_user.id %>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <table>
+        <tr>
+          <td>Address Line 1:</td>
+          <td><input type="text" name="address1"></td>
+        </tr>
+        <tr>
+          <td>Address Line 2:</td>
+          <td><input type="text" name="address2"></td>
+        </tr>
+        <tr>
+          <td>City:</td>
+          <td><input type="text" name="city"></td>
+        </tr>
+        <tr>
+          <td>State:</td>
+          <td><select name="state">
+          	<option value="AL">Alabama</option>
+          	<option value="AK">Alaska</option>
+          	<option value="AZ">Arizona</option>
+          	<option value="AR">Arkansas</option>
+          	<option value="CA">California</option>
+          	<option value="CO">Colorado</option>
+          	<option value="CT">Connecticut</option>
+          	<option value="DE">Delaware</option>
+          	<option value="DC">District Of Columbia</option>
+          	<option value="FL">Florida</option>
+          	<option value="GA">Georgia</option>
+          	<option value="HI">Hawaii</option>
+          	<option value="ID">Idaho</option>
+          	<option value="IL">Illinois</option>
+          	<option value="IN">Indiana</option>
+          	<option value="IA">Iowa</option>
+          	<option value="KS">Kansas</option>
+          	<option value="KY">Kentucky</option>
+          	<option value="LA">Louisiana</option>
+          	<option value="ME">Maine</option>
+          	<option value="MD">Maryland</option>
+          	<option value="MA">Massachusetts</option>
+          	<option value="MI">Michigan</option>
+          	<option value="MN">Minnesota</option>
+          	<option value="MS">Mississippi</option>
+          	<option value="MO">Missouri</option>
+          	<option value="MT">Montana</option>
+          	<option value="NE">Nebraska</option>
+          	<option value="NV">Nevada</option>
+          	<option value="NH">New Hampshire</option>
+          	<option value="NJ">New Jersey</option>
+          	<option value="NM">New Mexico</option>
+          	<option value="NY">New York</option>
+          	<option value="NC">North Carolina</option>
+          	<option value="ND">North Dakota</option>
+          	<option value="OH">Ohio</option>
+          	<option value="OK">Oklahoma</option>
+          	<option value="OR">Oregon</option>
+          	<option value="PA">Pennsylvania</option>
+          	<option value="RI">Rhode Island</option>
+          	<option value="SC">South Carolina</option>
+          	<option value="SD">South Dakota</option>
+          	<option value="TN">Tennessee</option>
+          	<option value="TX">Texas</option>
+          	<option value="UT">Utah</option>
+          	<option value="VT">Vermont</option>
+          	<option value="VA">Virginia</option>
+          	<option value="WA">Washington</option>
+          	<option value="WV">West Virginia</option>
+          	<option value="WI">Wisconsin</option>
+          	<option value="WY">Wyoming</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td>Zip:</td>
+          <td><input type="text" name="zip"></td>
+        </tr>
+      </table>
+      <input type="submit" name="submit">
+    </form>
+  </div>
+  <% else %>
+    <div class="post">
+      <form id="new-animal" action="/agency/<%= current_user.id %>/animal " method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="post-title">
+          <h4>New Animal</h4>
+        </div>
+        <div id="animal-top">
+          <div id="animal-top-left">
+            <img src="http://placehold.it/250x250">
+          </div>
+          <div id="animal-top-right">
+            <table>
+              <tr>
+                <td>Name:</td>
+                <td class="animal-form"><input type="text" name="name" placeholder="Clifford"></td>
+              </tr>
+              <tr>
+                <td>Breed:</td>
+                <td class="animal-form"><input type="text" name="breed" placeholder="Big Red Dog"></td>
+              </tr>
+              <tr>
+                <td>Birthday:</td>
+                <td class="animal-form"><input type="date" name="birthday"></td>
+              </tr>
+              <tr>
+                <td>Gender:</td>
+                <td class="animal-form"><select name="gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select></td>
+              </tr>
+              <tr>
+                <td>Weight:</td>
+                <td class="animal-form"><input type="number" name="weight" placeholder="500 lbs"></td>
+              </tr>
+              <tr>
+                <td>Species:</td>
+                <td class="animal-form"><input type="radio" name="species" value="Dog"> Dog <input type="radio" name="species" value="Cat"> Cat </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div id="animal-bottom">
+          <textarea name="desc" rows="6" cols="50" placeholder="Clifford is a huge Big Red Dog!"></textarea>
+          <p><input type="submit" value="New Animal"></p>
+        </div>
+      </form>
+    </div>
+    <% @agencyPosts.reverse.each do |post| %>
+    <div class="post">
+      <div class="post-title">
+      <h4><%= post.animal.name %></h4>
+      </div>
+      <img src="http://placehold.it/500x500">
+      <div>
+        <div class="animal-top">
+          <p><span class="name">Name: <%= post.animal.name %></span> <span>Breed: <%= post.animal.breed %></span> <span class="birthday">Birthday: <%= post.animal.birthday.strftime("%b %d, %Y") %></span></p>
+        </div>
+        <div class="animal-bottom">
+          <p><span class="gender">Gender: <%= post.animal.gender %></span> <span class="weight">Weight: <%= post.animal.weight %>lbs</span> <span class="location">Location: <%= post.animal.agency.agency_contact.city %>, <%= post.animal.agency.agency_contact.state %></span></p>
+        </div>
+        <div class="animal-desc">
+          <h4><%= post.description %></h4>
+        </div>
+        <div class="animal-comments">
+          <% if post.comments %>
+          <% post.comments.last(5).each do |comment| %>
+            <% if comment.commenter_type == "Agency" %>
+              <p class="animal-comment"><%= comment.commenter.name %> | <%= comment.comment%> | <%= comment.created_at.strftime("%m/%d/%Y")%></p>
+              <% end %>
+              <% if comment.commenter_type == "User" %>
+              <p class="animal-comment"><%= comment.commenter.username %><%= comment.comment%></p>
+              <% end %>
+            <% end %>
+          <% end %>
+          <form class="" action="/comment/<%= post.id %>" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <p class="comment"><input type="text" name="comment" placeholder="Write a comment!"> <input type="submit" value="Comment"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  <% end %>
+</div>

@@ -21,8 +21,9 @@
 
 #wrapper{
   padding: 0px 15px 0px 25px;
-  background: #0d1321;
-  height: 100vh;
+  background-color: #0d1321;
+  height: 100%;
+  color: #0d1321;
 }
 
 #header{

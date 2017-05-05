@@ -1,2 +1,40 @@
-<h1>Animal#show</h1>
-<p>Find me in app/views/animal/show.html.erb</p>
+<div class="wall">
+  <div class="post">
+    <h1 class="animal-name"><%= @animal.name %></h1>
+    <div class="agency-info">
+      <h4>Location: <%= @animal.agency.agency_contact.city %>, <%= @animal.agency.agency_contact.state %> Agency: <%= @animal.agency.name%></h4>
+      <h4><span class="breed">Breed: <%= @animal.breed %></span> <span class="birthday">Birthday: <%= @animal.birthday.strftime("%b %d, %Y") %></span></h4>
+      <h4><span class="gender">Gender: <%= @animal.gender %></span> <span class="weight">Weight: <%= @animal.weight %>lbs</span></h4>
+      <h4>Status: <% if @animal.adopted == true %>Adopted<% elsif @animal.fostered == true %>Fostered<% else %>At Shelter<% end %></h4>
+    </div>
+  </div>
+  <% @animal.posts.reverse.each do |post| %>
+    <div class="post">
+      <div class="post-title">
+      <h4><%= post.animal.name %></h4>
+      </div>
+      <img src="http://placehold.it/500x500">
+      <div>
+        <div class="animal-desc">
+          <h4><%= post.description %></h4>
+        </div>
+        <div class="animal-comments">
+          <% if post.comments %>
+          <% post.comments.last(5).each do |comment| %>
+            <% if comment.commenter_type == "Agency" %>
+              <p class="animal-comment"><%= comment.commenter.name %> | <%= comment.comment%> | <%= comment.created_at.strftime("%m/%d/%Y")%></p>
+              <% end %>
+              <% if comment.commenter_type == "User" %>
+              <p class="animal-comment"><%= comment.commenter.username %><%= comment.comment%></p>
+              <% end %>
+            <% end %>
+          <% end %>
+          <form class="" action="/comment/<%= post.id %>" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <p class="comment"><input type="text" name="comment" placeholder="Write a comment!"> <input type="submit" value="Comment"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

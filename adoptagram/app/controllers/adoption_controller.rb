@@ -34,6 +34,15 @@ class AdoptionController < ApplicationController
     end
   end
 
+  def adopt
+    session[:return_to] ||= request.referer
+    animal = Animal.find(params[:animal_id])
+    animal.fostered = false
+    animal.adopted = true
+    animal.save
+    redirect_to session.delete(:return_to)
+  end
+
   def destroy
     application = AdoptionApplication.find(params[:adoption_id])
     application.destroy
