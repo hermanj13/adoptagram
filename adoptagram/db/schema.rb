@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504220906) do
+ActiveRecord::Schema.define(version: 20170531205524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,11 +121,12 @@ ActiveRecord::Schema.define(version: 20170504220906) do
     t.integer  "agency_id"
     t.integer  "user_id"
     t.integer  "animal_id"
-    t.boolean  "read",       default: false
+    t.boolean  "agencyread", default: false
     t.string   "subject"
     t.text     "message"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.boolean  "userread",   default: false
   end
 
   add_index "messages", ["agency_id"], name: "index_messages_on_agency_id", using: :btree

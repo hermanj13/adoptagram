@@ -1,3 +1,41 @@
 // Place all the styles related to the Adoption controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#adoption-wrapper{
+  text-align: center;
+}
+
+#adoption-top-bar{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.status-true{
+  background-color: green;
+}
+
+#applicant-adoption-info{
+  width: 40%;
+  outline: black 1px solid;
+}
+
+#animal-adoption-info{
+  width: 40%;
+  outline: black 1px solid;
+}
+
+#adoption-status-update{
+  display: flex;
+  justify-content: center;
+}
+
+#adoption-messages-wrapper{
+  outline: black 1px solid;
+}
+
+#adoption-messages{
+  display: flex;
+  justify-content: center;
+}

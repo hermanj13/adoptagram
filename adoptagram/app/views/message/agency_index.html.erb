@@ -1,2 +1,61 @@
-<h1>Message#agency_index</h1>
-<p>Find me in app/views/message/agency_index.html.erb</p>
+<div class="yellow-background">
+  <h1>Unread Messages</h1>
+  <% if @unread_messages.first %>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Subject</th>
+        <th>Animal Name</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+      <% @unread_messages.each do |message| %>
+          <tr>
+            <td>
+              <% if message.user.user_contact %>
+              <%= message.user.user_contact.first%> <%= message.user.user_contact.last%>
+              <%else%>
+                <%= message.user.username%>
+              <%end%>
+            </td>
+            <td><%= message.subject%></td>
+            <td><%= message.animal.name%></td>
+            <td><%= message.created_at%></td>
+            <td><a href="/agency/<%= current_user.id %>/message/<%= message.id %>">View</a> | <a href="/user/<%= message.user.id %>">User</a> | <a href="/message/<%= message.id%>/read">Mark as Read</a></td>
+          </tr>
+      <% end%>
+    </table>
+  <%else%>
+    <h3>No Unread Messages</h3>
+  <%end%>
+  <h2>Read Messages</h2>
+  <% if @read_messages.first %>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Subject</th>
+        <th>Animal Name</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+      <% @read_messages.each do |message| %>
+          <tr>
+            <td>
+              <% if message.user.user_contact %>
+              <%= message.user.user_contact.first%> <%= message.user.user_contact.last%>
+              <%else%>
+                <%= message.user.username%>
+              <%end%>
+            </td>
+            <td><%= message.subject%></td>
+            <td><%= message.animal.name%></td>
+            <td><%= message.created_at%></td>
+            <td><a href="/agency/<%= current_user.id %>/message/<%= message.id %>">View</a> | <a href="/user/<%= message.user.id %>">User</a> | <a href="/message/<%= message.id%>/read">Mark as Unread</a></td>
+          </tr>
+      <% end%>
+    </table>
+  <%else%>
+    <h3>No Read Messages</h3>
+  <% end %>
+
+</div>

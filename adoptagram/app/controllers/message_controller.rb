@@ -1,11 +1,12 @@
 class MessageController < ApplicationController
   def agency_index
-    @messages = Message.where(agency_id: current_user.id)
+    @read_messages = Message.where(agency_id: current_user.id).where(agencyread: true)
+    @unread_messages = Message.where(agency_id: current_user.id).where(agencyread: false)
   end
 
   def agency_show
     @message = Message.find(params[:message_id])
-    @message.read = true
+    @message.agencyread = true
     @message.save
   end
 
@@ -20,7 +21,9 @@ class MessageController < ApplicationController
   end
 
   def user_index
-    @messages = Message.where(user_id: current_user.id)
+    @read_messages = Message.where(user_id: current_user.id).where(userread: true)
+    @unread_messages = Message.where(user_id: current_user.id).where(userread: false)
+
   end
 
   def user_create
@@ -36,7 +39,7 @@ class MessageController < ApplicationController
 
   def user_show
     @message = Message.find(params[:message_id])
-    @message.read = true
+    @message.userread = true
     @message.save
   end
 
@@ -48,5 +51,28 @@ class MessageController < ApplicationController
       flash[:notice] = newMessage.errors.full_messages
       redirect_to "/user/#{current_user.id}/message/#{params[:message_id]}"
     end
+  end
+
+  def mark_read
+    session[:return_to] ||= request.referer
+    message = Message.find(params[:message_id])
+    if session[:type] == "agency"
+      if message.agencyread == true
+        message.agencyread = false
+        message.save
+      elsif message.agencyread == false
+        message.agencyread = true
+        message.save
+      end
+    elsif session[:type] == "user"
+      if message.userread == true
+        message.userread = false
+        message.save
+      elsif message.userread == false
+        message.userread = true
+        message.save
+      end
+    end
+    redirect_to session.delete(:return_to)
   end
 end

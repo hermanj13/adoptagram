@@ -10,7 +10,7 @@
       <th>Status</th>
       <th>Action</th>
     </tr>
-    <% @agencyAnimals.each do |animal| %>
+    <% @agencyAnimals.order(:name).each do |animal| %>
     <tr>
       <td>
         <%= animal.name %>

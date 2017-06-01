@@ -1,2 +1,6 @@
-<h1>Message#agency_show</h1>
-<p>Find me in app/views/message/agency_show.html.erb</p>
+<div class="yellow-background">
+  <h1>User: <%= @message.user.username %></h1>
+  <h1>Animal: <%= @message.animal.name %></h1>
+  <h1>Subject: <%= @message.subject %></h1>
+  <h1>Message: <%= @message.message %></h1>
+</div>

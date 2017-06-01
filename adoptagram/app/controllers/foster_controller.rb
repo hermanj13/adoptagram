@@ -14,37 +14,49 @@ class FosterController < ApplicationController
   end
 
   def show
-    @application = FosterApplication.find(params[:foster])
+    @application = FosterApplication.find(params[:foster_id])
+    @messages = Message.where(animal_id: @application.animal.id)
   end
 
   def update
-    application = FosterApplication.find(params[:foster])
+    application = FosterApplication.find(params[:foster_id])
     if application.update(comments: params[:comments])
-      redirect_to ("/agency/#{params[agency_id]}/foster/#{application.id}")
+      redirect_to ("/agency/#{current_user.id}/foster/#{application.id}")
     else
       flash[:notice] = application.errors.full_messages
-      redirect_to ("/agency/#{params[agency_id]}/foster/#{application.id}")
+      redirect_to ("/agency/#{current_user.id}/foster/#{application.id}")
     end
   end
 
   def status
-    application = FosterApplication.find(params[:foster])
-    if application.update(contacted: params[:contacted], interviewed: params[:interviewed],approved: params[:approved],accepted: params[:accepted])
-      redirect_to ("/agency/#{params[agency_id]}/foster/#{application.id}")
+    application = FosterApplication.find(params[:foster_id])
+    if params[:contacted]
+      application.contacted = !application.contacted
+    elsif params[:interviewed]
+      application.interviewed = !application.interviewed
+    elsif params[:approved]
+      application.approved = !application.approved
+    elsif params[:accepted]
+      application.accepted = !application.accepted
     end
+    application.save
+    redirect_to ("/agency/#{current_user.id}/foster/#{application.id}")
   end
 
   def foster
     session[:return_to] ||= request.referer
     animal = Animal.find(params[:animal_id])
-    animal.adopted = false
-    animal.fostered = true
+    if !animal.adopted
+      animal.fostered = !animal.fostered
+    else
+      flash[:adopted_notice] = "Animal is already adopted"
+    end
     animal.save
     redirect_to session.delete(:return_to)
   end
 
   def destroy
-    application = FosterApplication.find(params[:foster])
+    application = FosterApplication.find(params[:foster_id])
     application.destroy
     redirect_to "/agency/#{current_user.id}/foster"
   end

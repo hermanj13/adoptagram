@@ -16,7 +16,7 @@
               <p class="animal-comment"><%= comment.commenter.name %> | <%= comment.comment%> | <%= comment.created_at.strftime("%m/%d/%Y")%></p>
               <% end %>
               <% if comment.commenter_type == "User" %>
-              <p class="animal-comment"><%= comment.commenter.username %><%= comment.comment%></p>
+              <p class="animal-comment"><%= comment.commenter.username %> | <%= comment.comment%> | <%= comment.created_at.strftime("%m/%d/%Y")%></p>
               <% end %>
             <% end %>
           <% end %>

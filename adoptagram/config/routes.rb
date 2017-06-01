@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   post '/user/:user_id/message' => 'message#user_create'
   get '/user/:user_id/message/:message_id' => 'message#user_show'
   post '/user/:user_id/message/:message_id' => 'message#user_reply'
+  get '/message/:message_id/read' => 'message#mark_read'
 
   #animal#
   get '/animal/:animal_id' => 'animal#show'

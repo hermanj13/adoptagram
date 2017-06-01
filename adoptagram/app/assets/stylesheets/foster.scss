@@ -1,3 +1,41 @@
-// Place all the styles related to the Foster controller here.
+// Place all the styles related to the Adoption controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#foster-wrapper{
+  text-align: center;
+}
+
+#foster-top-bar{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.status-true{
+  background-color: green;
+}
+
+#applicant-foster-info{
+  width: 40%;
+  outline: black 1px solid;
+}
+
+#animal-foster-info{
+  width: 40%;
+  outline: black 1px solid;
+}
+
+#foster-status-update{
+  display: flex;
+  justify-content: center;
+}
+
+#foster-messages-wrapper{
+  outline: black 1px solid;
+}
+
+#foster-messages{
+  display: flex;
+  justify-content: center;
+}

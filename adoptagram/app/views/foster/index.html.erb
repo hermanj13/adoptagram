@@ -1,2 +1,37 @@
-<h1>Foster#index</h1>
-<p>Find me in app/views/foster/index.html.erb</p>
+<div class="yellow-background">
+  <h1>Foster Aplications</h1>
+  <div class="foster-box">
+    <% @applications.select(:animal_id).distinct.each do |foster| %>
+      <%= foster.animal.name %>
+      <br />
+      <% foster.animal.foster_applications.each do |fostery| %>
+        <a href="/agency/<%= current_user.id%>/foster/<%= fostery.id %>"><%= fostery.user.user_contact.first %> <%= fostery.user.user_contact.last %></a><br />
+        <% if fostery.contacted %>
+          <input type="checkbox" checked disabled="true"/>
+        <%else%>
+        <input type="checkbox" disabled="true"/>
+        <%end %>
+        Contacted<br />
+        <% if fostery.interviewed %>
+          <input type="checkbox" checked disabled="true"/>
+        <%else%>
+        <input type="checkbox" disabled="true"/>
+        <%end %>
+        Interviewed<br />
+        <% if fostery.approved %>
+          <input type="checkbox" checked disabled="true"/>
+        <%else%>
+        <input type="checkbox" disabled="true"/>
+        <%end %>
+        Approved<br />
+        <% if fostery.accepted %>
+          <input type="checkbox" checked disabled="true"/>
+        <%else%>
+        <input type="checkbox" disabled="true"/>
+        <%end %>
+        Accepted
+        <br />
+      <% end %>
+    <%end %>
+  </div>
+</div>

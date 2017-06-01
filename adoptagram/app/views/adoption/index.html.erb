@@ -1,2 +1,37 @@
-<h1>Adoption#index</h1>
-<p>Find me in app/views/adoption/index.html.erb</p>
+<div class="yellow-background">
+  <h1>Adoption Aplications</h1>
+  <div class="adoption-box">
+    <% @applications.select(:animal_id).distinct.each do |adoption| %>
+      <%= adoption.animal.name %>
+      <br />
+      <% adoption.animal.adoption_applications.each do |adopty| %>
+        <a href="/agency/<%= current_user.id%>/adoption/<%= adopty.id %>"><%= adopty.user.user_contact.first %> <%= adopty.user.user_contact.last %></a><br />
+        <% if adopty.contacted %>
+          <input type="checkbox" checked disabled="true"/>
+        <%else%>
+        <input type="checkbox" disabled="true"/>
+        <%end %>
+        Contacted<br />
+        <% if adopty.interviewed %>
+          <input type="checkbox" checked disabled="true"/>
+        <%else%>
+        <input type="checkbox" disabled="true"/>
+        <%end %>
+        Interviewed<br />
+        <% if adopty.approved %>
+          <input type="checkbox" checked disabled="true"/>
+        <%else%>
+        <input type="checkbox" disabled="true"/>
+        <%end %>
+        Approved<br />
+        <% if adopty.accepted %>
+          <input type="checkbox" checked disabled="true"/>
+        <%else%>
+        <input type="checkbox" disabled="true"/>
+        <%end %>
+        Accepted
+        <br />
+      <% end %>
+    <%end %>
+  </div>
+</div>

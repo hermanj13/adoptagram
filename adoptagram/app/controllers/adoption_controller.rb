@@ -15,30 +15,39 @@ class AdoptionController < ApplicationController
 
   def show
     @application = AdoptionApplication.find(params[:adoption_id])
+    @messages = Message.where(animal_id: @application.animal.id)
   end
 
   def update
     application = AdoptionApplication.find(params[:adoption_id])
     if application.update(comments: params[:comments])
-      redirect_to ("/agency/#{params[agency_id]}/adoption/#{application.id}")
+      redirect_to ("/agency/#{current_user.id}/adoption/#{application.id}")
     else
       flash[:notice] = application.errors.full_messages
-      redirect_to ("/agency/#{params[agency_id]}/adoption/#{application.id}")
+      redirect_to ("/agency/#{current_user.id}/adoption/#{application.id}")
     end
   end
 
   def status
     application = AdoptionApplication.find(params[:adoption_id])
-    if application.update(contacted: params[:contacted], interviewed: params[:interviewed],approved: params[:approved],accepted: params[:accepted])
-      redirect_to ("/agency/#{params[agency_id]}/adoption/#{application.id}")
+    if params[:contacted]
+      application.contacted = !application.contacted
+    elsif params[:interviewed]
+      application.interviewed = !application.interviewed
+    elsif params[:approved]
+      application.approved = !application.approved
+    elsif params[:accepted]
+      application.accepted = !application.accepted
     end
+    application.save
+    redirect_to ("/agency/#{current_user.id}/adoption/#{application.id}")
   end
 
   def adopt
     session[:return_to] ||= request.referer
     animal = Animal.find(params[:animal_id])
     animal.fostered = false
-    animal.adopted = true
+    animal.adopted = !animal.adopted
     animal.save
     redirect_to session.delete(:return_to)
   end

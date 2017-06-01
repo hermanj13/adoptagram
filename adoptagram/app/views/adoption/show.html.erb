@@ -1,2 +1,118 @@
-<h1>Adoption#show</h1>
-<p>Find me in app/views/adoption/show.html.erb</p>
+<div class="yellow-background">
+<div id="adoption-wrapper">
+  <h1>Adoption Application - <%= @application.user.user_contact.first%> <%= @application.user.user_contact.last%></h1>
+  <div id="adoption-top-bar">
+    <div id="applicant-adoption-info">
+      <h1>Applicant</h1>
+      <h3>Profile: <a href="/user/<%= @application.user.id%>"><%= @application.user.user_contact.first%> <%= @application.user.user_contact.last%></a></h3>
+      <h3>Comments:</h3>
+      <form action="/agency/<%= current_user.id %>/adoption/<%= @application.id %>" method="post">
+        <input type="hidden" name="_method" value="patch">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <textarea rows="15" cols="50" name="comments"><%= @application.comments %></textarea>
+        <br />
+        <input type="submit" value="Update">
+      </form>
+    </div>
+    <div id="animal-adoption-info">
+      <h1>Animal</h1>
+      <h3>Profile: <a href="/agency/<%= current_user.id %>/animal/<%= @application.animal.id %>"><%= @application.animal.name %></a></h3>
+      <h3>Breed: <%= @application.animal.breed %></h3>
+      <h3>Birthday: <%= @application.animal.birthday %></h3>
+      <h3>Weight: <%= @application.animal.weight %></h3>
+      <h3>Gender: <%= @application.animal.gender %></h3>
+      <h3>Location: <%= @application.agency.agency_contact.city %>,<%= @application.agency.agency_contact.state %></h3>
+      <h3>Location: <%= @application.animal.species %></h3>
+    </div>
+  </div>
+  <div id="adoption-status-update">
+    <form action="/agency/<%= current_user.id %>/adoption/<%= @application.id%>/status" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="contacted" />
+      <%if !@application.contacted %>
+      <input type="submit" value="Contacted">
+      <%elsif%>
+      <input type="submit" class="status-true" value="Contacted">
+      <%end%>
+    </form>
+    <form action="/agency/<%= current_user.id %>/adoption/<%= @application.id%>/status" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="interviewed" />
+      <%if !@application.interviewed %>
+      <input type="submit" value="Interviewed">
+      <%elsif%>
+      <input type="submit" class="status-true" value="Interviewed">
+      <%end%>
+    </form>
+    <form action="/agency/<%= current_user.id %>/adoption/<%= @application.id%>/status" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="approved" />
+      <%if !@application.approved %>
+      <input type="submit" value="Approved">
+      <%elsif%>
+      <input type="submit" class="status-true" value="Approved">
+      <%end%>
+    </form>
+    <form action="/agency/<%= current_user.id %>/adoption/<%= @application.id%>/status" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="accepted" />
+      <%if !@application.accepted %>
+      <input type="submit" value="Accepted">
+      <%elsif%>
+      <input type="submit" class="status-true" value="Accepted">
+      <%end%>
+    </form>
+  </div>
+  <div id="adoption-status-update">
+    <form action="/agency/<%= current_user.id %>/animal/<%= @application.animal.id%>/adopt" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="adopt" />
+      <%if @application.contacted && @application.interviewed && @application.approved && @application.accepted %>
+        <% if @application.animal.adopted %>
+          <input type="submit" class="status-true" value="Adopt!">
+        <%elsif%>
+          <input type="submit" value="Adopt!">
+        <%end%>
+      <%end%>
+    </form>
+  </div>
+  <div id="adoption-messages-wrapper">
+    <div id="adoption-messages-title">
+      <h1>Messages</h1>
+    </div>
+    <div id="adoption-messages">
+      <% if @messages.first %>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+          <% @messages.each do |message| %>
+              <tr>
+                <td>
+                  <% if message.user.user_contact %>
+                  <%= message.user.user_contact.first%> <%= message.user.user_contact.last%>
+                  <%else%>
+                    <%= message.user.username%>
+                  <%end%>
+                </td>
+                <td><%= message.subject%></td>
+                <td><%= message.created_at%></td>
+                <td><a href="/agency/<%= current_user.id %>/message/<%= message.id %>">View</a></td>
+              </tr>
+          <% end%>
+        </table>
+      <%else%>
+        <h3>No Messages</h3>
+      <%end%>
+    </div>
+  </div>
+</div>
+</div>
