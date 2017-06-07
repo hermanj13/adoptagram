@@ -2,40 +2,40 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#adoption-wrapper{
-  text-align: center;
+#adoption-wrapper {
+	text-align: center;
 }
 
-#adoption-top-bar{
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
+#adoption-top-bar {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
 }
 
-.status-true{
-  background-color: green;
+.status-true {
+	background-color: green;
 }
 
-#applicant-adoption-info{
-  width: 40%;
-  outline: black 1px solid;
+#applicant-adoption-info {
+	width: 40%;
+	outline: #000000 1px solid;
 }
 
-#animal-adoption-info{
-  width: 40%;
-  outline: black 1px solid;
+#animal-adoption-info {
+	width: 40%;
+	outline: #000000 1px solid;
 }
 
-#adoption-status-update{
-  display: flex;
-  justify-content: center;
+#adoption-status-update {
+	display: flex;
+	justify-content: center;
 }
 
-#adoption-messages-wrapper{
-  outline: black 1px solid;
+#adoption-messages-wrapper {
+	outline: #000000 1px solid;
 }
 
-#adoption-messages{
-  display: flex;
-  justify-content: center;
+#adoption-messages {
+	display: flex;
+	justify-content: center;
 }

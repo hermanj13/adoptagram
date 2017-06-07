@@ -14,40 +14,40 @@
  *= require_self
  */
 
-*{
-    margin: 0;
-    padding: 0;
+* {
+	margin: 0;
+	padding: 0;
 }
 
-#wrapper{
-  padding: 0px 15px 0px 25px;
-  background-color: #0d1321;
-  height: 100%;
-  color: #0d1321;
+#wrapper {
+	padding: 0 15px 0 25px;
+	background-color: #0d1321;
+	height: 100%;
+	color: #0d1321;
 }
 
-#header{
-  display:flex;
-  background: #c03221;
+#header {
+	display: flex;
+	background: #c03221;
 }
-#leftheader{
-  display:flex;
+#leftheader {
+	display: flex;
 }
-#leftheader h1{
-  position: relative;
-  left: 5px;
-  margin-top: 5px;
+#leftheader h1 {
+	position: relative;
+	left: 5px;
+	margin-top: 5px;
 }
 
-#rightheader{
-  display: block;
-  position: absolute;
-  right: 10px;
-  margin-right: 10px
+#rightheader {
+	display: block;
+	position: absolute;
+	right: 10px;
+	margin-right: 10px;
 }
-#right_top{
-  display:inline;
+#right_top {
+	display: inline;
 }
-.yellow-background{
-  background: yellow;
+.yellow-background {
+	background: yellow;
 }

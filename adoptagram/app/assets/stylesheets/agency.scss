@@ -3,35 +3,35 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.post{
-  background: #ccc9a1;
-  margin: 15px auto 15px auto;
-  width: 600px;
-  text-align: center;
-  padding: 15px 0px 15px 0px;
+.post {
+	background: #ccc9a1;
+	margin: 15px auto 15px auto;
+	width: 600px;
+	text-align: center;
+	padding: 15px 0 15px 0;
 }
-#animal-top{
-  display: inline-flex;
-}
-
-#animal-top-left{
-  margin-right: 20px;
+#animal-top {
+	display: inline-flex;
 }
 
-#animal-top-right{
-  text-align: left;
-  align-self: center;
+#animal-top-left {
+	margin-right: 20px;
 }
 
-#all-animal-table{
-  background: #ccc9a1;
-  margin: 15px auto 15px auto;
-  width: 90%;
-  align-content: center;
-  text-align: center;
-  padding: 15px 0px 15px 0px;
+#animal-top-right {
+	text-align: left;
+	align-self: center;
 }
-#animal-table{
-  margin: 15px auto;
-  width: 100%;
+
+#all-animal-table {
+	background: #ccc9a1;
+	margin: 15px auto 15px auto;
+	width: 90%;
+	align-content: center;
+	text-align: center;
+	padding: 15px 0 15px 0;
+}
+#animal-table {
+	margin: 15px auto;
+	width: 100%;
 }

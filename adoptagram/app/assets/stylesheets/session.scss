@@ -2,39 +2,39 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#body{
-  display: flex;
-  margin-top: 30px;
+#body {
+	display: flex;
+	margin-top: 30px;
 }
 
-#left{
-  margin-top: 10px;
-  width: 50%;
-  color: #e0dfd5;
+#left {
+	margin-top: 10px;
+	width: 50%;
+	color: #e0dfd5;
 }
 
-#welcome{
-  position: relative;
-  left: 15%;
-  margin-top: 10px;
-  width:70%;
-  outline: 3px #c03221 solid;
+#welcome {
+	position: relative;
+	left: 15%;
+	margin-top: 10px;
+	width: 70%;
+	outline: 3px #c03221 solid;
 }
 
-#right{
-  width: 50%;
-  text-align: center;
-  align-items: center;
-  align-content: center;
-  color: #e0dfd5;
+#right {
+	width: 50%;
+	text-align: center;
+	align-items: center;
+	align-content: center;
+	color: #e0dfd5;
 }
 
-#register{
-  align-content: center;
-  display: inline-block;
-  text-align: center;
+#register {
+	align-content: center;
+	display: inline-block;
+	text-align: center;
 }
 
-#puppies{
-  margin: 30px auto;
+#puppies {
+	margin: 30px auto;
 }
