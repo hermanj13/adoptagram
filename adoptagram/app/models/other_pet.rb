@@ -1,7 +1,7 @@
 class OtherPet < ActiveRecord::Base
   belongs_to :user
 
-  validates :number, :type, :discipline, presence: true
+  validates :number, :animal_type, :discipline, presence: true
   validates_inclusion_of :vacinated, :fixed, :lost, in: [true,false]
   before_validation :numberCheck
   private

@@ -1,3 +1,28 @@
 // Place all the styles related to the User controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+* {
+	outline: 1px solid red;
+}
+
+#topBar {
+	display: inline-flex;
+	justify-content: space-around;
+	width: 100%;
+}
+
+#bottomBar {
+	display: inline-flex;
+	justify-content: space-around;
+	width: 100%;
+}
+
+.leftbox {
+	height: 45vh;
+	width: 45vw;
+}
+
+.rightbox {
+	height: 45vh;
+	width: 45vw;
+}

@@ -1,2 +1,233 @@
-<h1>User#show</h1>
-<p>Find me in app/views/user/show.html.erb</p>
+<div class="yellow-background">
+  <div id="topBar">
+    <div id="user-contact-box" class="leftbox">
+      <% if @user.user_contact %>
+        <h1>Contact Info</h1>
+        <button id="user_contact" style="width: 30%;">Edit</button>
+        <table id="UserContact">
+          <tr>
+            <td><p>First Name:</p></td>
+            <td><p><%= @user.user_contact.first%></p></td>
+          </tr>
+          <tr>
+            <td><p>Last Name:</p></td>
+            <td><p><%= @user.user_contact.last%></p></td>
+          </tr>
+          <tr>
+            <td><p>Occupation:</p></td>
+            <td><p><%= @user.user_contact.occupation%></p></td>
+          </tr>
+          <tr>
+            <td><p>Address:</p></td>
+            <td>
+              <p><%= @user.user_contact.address1%></p>
+              <% if @user.user_contact.address2 %>
+                <p><%= @user.user_contact.address2%></p>
+              <% end %>
+              <p><%= @user.user_contact.city%>, <%= @user.user_contact.state%> <%= @user.user_contact.zip%></p>
+            </td>
+          </tr>
+          <tr>
+            <td><p>Phone #:</p></td>
+            <td><p><%= @user.user_contact.phone%></p></td>
+          </tr>
+          <tr>
+            <td><p>Email:</p></td>
+            <td><p><%= @user.user_contact.email%></p></td>
+          </tr>
+          <tr>
+            <td><p>Best time to contact:</p></td>
+            <td><p><%= @user.user_contact.best_contact%></p></td>
+          </tr>
+        </table>
+      <% else %>
+        <h1>No User Info</h1>
+      <% end %>
+    </div>
+    <div id="family-info-box" class="rightbox">
+      <% if @user.family_info %>
+        <h1>Family Info</h1>
+        <button id="family_info" style="width: 30%;">Edit</button>
+        <table>
+          <tr>
+            <td><p>Number of Adults:</p></td>
+            <td><p><%= @user.family_info.adults %></p></td>
+          </tr>
+          <tr>
+            <td><p>Number of Children:</p></td>
+            <td><p><%= @user.family_info.children %></p></td>
+          </tr>
+          <tr>
+            <td><p>Type of Home:</p></td>
+            <td><p><%= @user.family_info.home_type %></p></td>
+          </tr>
+          <tr>
+            <td><p>Household Description:</p></td>
+            <td><p><%= @user.family_info.description %></p></td>
+          </tr>
+          <tr>
+            <td><p>Landlord Contact:</p></td>
+            <% if @user.family_info.landlord != "n/a" %>
+              <td><p><%= @user.family_info.phone %></p></td>
+            <% else %>
+              <td><p>N/A</p></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td><p>Animal Allergies:</p></td>
+            <td><p><%= @user.family_info.allergies %></p></td>
+          </tr>
+          <tr>
+            <td><p>Family in Agreement:</p></td>
+            <td><p><%= @user.family_info.agreement %></p></td>
+          </tr>
+          <tr>
+            <td><p>Time for Animal:</p></td>
+            <td><p><%= @user.family_info.time %></p></td>
+          </tr>
+        </table>
+      <% else %>
+        <h1>No Family Info</h1>
+      <% end %>
+    </div>
+  </div>
+  <div id="bottomBar">
+    <div id="pet-info-box" class="leftbox">
+      <% if @user.other_pet %>
+        <h1>Other Pet Info</h1>
+        <button id="pet_info" style="width: 30%;">Edit</button>
+        <table>
+          <tr>
+            <td><p>Number of Other Pets:</p></td>
+            <td><p><%= @user.other_pet.number %></p></td>
+          </tr>
+          <tr>
+            <td><p>Type of Other Pets:</p></td>
+            <td><p><%= @user.other_pet.animal_type %></p></td>
+          </tr>
+          <tr>
+            <td><p>Vacinated:</p></td>
+            <td><p><%= @user.other_pet.vacinated %></p></td>
+          </tr>
+          <tr>
+            <td><p>Spayed/Neutered:</p></td>
+            <td><p><%= @user.other_pet.fixed %></p></td>
+          </tr>
+          <tr>
+            <td><p>Ever Lost a Pet:</p></td>
+            <td><p><%= @user.other_pet.lost %></p></td>
+          </tr>
+          <tr>
+            <td><p>Discipline Style:</p></td>
+            <td><p><%= @user.other_pet.discipline %></p></td>
+          </tr>
+        </table>
+      <% else %>
+        <h1>No Other Pet Info</h1>
+      <% end %>
+    </div>
+    <div id="vet-info-box" class="rightbox">
+      <% if @user.vet %>
+        <h1>Veterinarian Info</h1>
+        <button id="vet_info" style="width: 30%;">Edit</button>
+        <table>
+          <tr>
+            <td><p>Have a Regular Vet:</p></td>
+            <td><p><%= @user.vet.have %></p></td>
+          </tr>
+          <tr>
+            <td><p>Vet's Name:</p></td>
+            <td>
+              <% if @user.vet.have %>
+                <p><%= @user.vet.name %></p>
+              <% else %>
+                <p>N/A</p>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><p>Clinic Name:</p></td>
+            <td>
+              <% if @user.vet.have %>
+                <p><%= @user.vet.clinic %></p>
+              <% else %>
+                <p>N/A</p>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><p>Clinic Phone:</p></td>
+            <td>
+              <% if @user.vet.have %>
+                <p><%= @user.vet.phone %></p>
+              <% else %>
+                <p>N/A</p>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      <% else %>
+        <h1>No Other Vet Info</h1>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#user_contact").click(function(){
+    $(this).hide()
+    $('#UserContact').replaceWith(`
+      <form action="/user/<%= @user.id %>/contact" method="post">
+        <input type="hidden" name="_method" value="patch">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <table id="UserContact">
+          <tr>
+            <td><p>First Name:</p></td>
+            <td><input type="text" name="first" value="<%= @user.user_contact.first%>"></td>
+          </tr>
+          <tr>
+            <td><p>Last Name:</p></td>
+            <td><input type="text" name="last" value="<%= @user.user_contact.last%>"></td>
+          </tr>
+          <tr>
+            <td><p>Occupation:</p></td>
+            <td><input type="text" name="occupation" value="<%= @user.user_contact.occupation%>"></td>
+          </tr>
+          <tr>
+            <td><p>Address:</p></td>
+            <td>
+              <input type="text" name="address1" value="<%= @user.user_contact.address1%>">
+              <% if @user.user_contact.address2 %>
+                <input type="text" name="address2" value="<%= @user.user_contact.address2%>">
+              <% end %>
+              <p><input type="text" name="city" value="<%= @user.user_contact.city%>">, <input type="text" name="state" value="<%= @user.user_contact.state%>"> <input type="text" name="zip" value="<%= @user.user_contact.zip%>"></p>
+            </td>
+          </tr>
+          <tr>
+            <td><p>Phone #:</p></td>
+            <td><input type="text" name="phone" value="<%= @user.user_contact.phone%>"></td>
+          </tr>
+          <tr>
+            <td><p>Email:</p></td>
+            <td><input type="text" name="email" value="<%= @user.user_contact.email%>"></td>
+          </tr>
+          <tr>
+            <td><p>Best time to contact:</p></td>
+            <td><input type="text" name="best_contact" value="<%= @user.user_contact.best_contact%>"></td>
+          </tr>
+        </table>
+        <input type="submit" name="Update" >
+      </form>
+      `)
+  });
+  $("#family_info").click(function(){
+    alert( "Family Info" );
+  });
+  $("#pet_info").click(function(){
+    alert( "Pet Info" );
+  });
+  $("#vet_info").click(function(){
+    alert( "Vet Info" );
+  });
+});
+</script>
