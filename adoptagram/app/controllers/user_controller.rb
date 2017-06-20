@@ -5,7 +5,9 @@ class UserController < ApplicationController
 
   def show
     ##add check for either user || agency with application pending#
-    @user = User.find(params[:user_id])
+    if session[:type] == "user" && current_user.id.to_s == params[:user_id] || session[:type] == "agency" && AdoptionApplication.where(agency_id: current_user.id, user_id: params[:user_id]).first || session[:type] == "agency" && FosterApplication.where(agency_id: current_user.id, user_id: params[:user_id]).first
+      @user = User.find(params[:user_id])
+    end
   end
 
   def create_contact
