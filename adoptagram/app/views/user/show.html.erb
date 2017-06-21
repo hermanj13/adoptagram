@@ -46,7 +46,45 @@
             </tr>
           </table>
         <% else %>
-          <h1>No User Info</h1>
+          <h1>Please add your contact info:</h1>
+          <form action="/user/<%= @user.id %>/contact" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <table id="UserContact">
+              <tr>
+                <td><p>First Name:</p></td>
+                <td><input type="text" name="first" placeholder="John"></td>
+              </tr>
+              <tr>
+                <td><p>Last Name:</p></td>
+                <td><input type="text" name="last" placeholder="Doe"></td>
+              </tr>
+              <tr>
+                <td><p>Occupation:</p></td>
+                <td><input type="text" name="occupation" placeholder="Pet Owner"></td>
+              </tr>
+              <tr>
+                <td><p>Address:</p></td>
+                <td>
+                  <input type="text" name="address1" placeholder="113 Post Street">
+                  <input type="text" name="address2" placeholder="Apt 513(If Necessary)">
+                  <p><input type="text" name="city" placeholder="Nashville">, <input type="text" name="state" placeholder="TN"> <input type="text" name="zip" placeholder="37215"></p>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Phone #:</p></td>
+                <td><input type="text" name="phone" placeholder="517-867-5309"></td>
+              </tr>
+              <tr>
+                <td><p>Email:</p></td>
+                <td><input type="text" name="email" placeholder="JohnDoe@email.com"></td>
+              </tr>
+              <tr>
+                <td><p>Best time to contact:</p></td>
+                <td><input type="text" name="best_contact" placeholder="Weekends after 11am"></td>
+              </tr>
+            </table>
+            <input type="submit" name="Submit" >
+          </form>
         <% end %>
       </div>
       <div id="family-info-box" class="rightbox">
@@ -55,7 +93,7 @@
           <% if session[:type] == "user" %>
             <button id="family_info" style="width: 30%;">Edit</button>
           <% end %>
-          <table>
+          <table id="FamilyInfo">
             <tr>
               <td><p>Number of Adults:</p></td>
               <td><p><%= @user.family_info.adults %></p></td>
@@ -75,9 +113,12 @@
             <tr>
               <td><p>Landlord Contact:</p></td>
               <% if @user.family_info.landlord != "n/a" %>
-                <td><p><%= @user.family_info.phone %></p></td>
+                <td>
+                  <p><%= @user.family_info.landlord %></p>
+                  <p><%= @user.family_info.phone %></p>
+                </td>
               <% else %>
-                <td><p>N/A</p></td>
+                <td><p>None</p></td>
               <% end %>
             </tr>
             <tr>
@@ -86,15 +127,94 @@
             </tr>
             <tr>
               <td><p>Family in Agreement:</p></td>
-              <td><p><%= @user.family_info.agreement %></p></td>
+              <td>
+                  <p>
+                    <%if @user.family_info.agreement == true %>
+                      Yes
+                    <%else%>
+                      No
+                    <%end%>
+                </p>
+              </td>
             </tr>
             <tr>
               <td><p>Time for Animal:</p></td>
-              <td><p><%= @user.family_info.time %></p></td>
+              <td>
+                  <p>
+                    <%if @user.family_info.time == true %>
+                      Yes
+                    <%else%>
+                      No
+                    <%end%>
+                </p>
+              </td>
             </tr>
           </table>
         <% else %>
-          <h1>No Family Info</h1>
+          <h1>Please Add Your Family Info:</h1>
+          <form action="/user/<%= @user.id %>/family" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <table id="FamilyInfo">
+            <tr>
+              <td><p>Number of Adults:</p></td>
+              <td><input type="number" name="adults" placeholder="Adults"></td>
+            </tr>
+            <tr>
+              <td><p>Number of Children:</p></td>
+              <td><input type="number" name="children" placeholder="Children"</td>
+            </tr>
+            <tr>
+              <td><p>Type of Home:</p></td>
+              <td>
+                <select name="home_type">
+                  <option value="">Select a Home Type</option>
+                  <option value="House">House</option>
+                  <option value="Apartment">Apartment</option>
+                  <option value="Condo">Condo</option>
+                  <option value="Townhome">Townhome</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><p>Household Description:</p></td>
+              <td><input type="text" name="description" placeholder="Quite, relaxed atmosphere"></td>
+            </tr>
+            <tr id="InitLandlordQuestion">
+              <td><p>Landlord?:</p></td>
+              <td>
+                <input id="inithaveLL" type="checkbox">
+              </td>
+            </tr>
+            <tr>
+              <td><p>Animal Allergies?:</p></td>
+              <td>
+                <input type="checkbox" id="initAllergyCheck" />
+                <input id="initAllergyField" type="text" name="allergies" value="None" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td><p>Family in Agreement:</p></td>
+              <td>
+                <select name="agreement">
+                  <option value="">Select an Option</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><p>Time for Animal:</p></td>
+              <td>
+                <select name="time">
+                  <option value="">Select an Option</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+              </td>
+            </tr>
+            </table>
+            <input type="submit" name="Update" >
+          </form>
         <% end %>
       </div>
     </div>
@@ -105,34 +225,124 @@
           <% if session[:type] == "user" %>
             <button id="pet_info" style="width: 30%;">Edit</button>
           <% end %>
-          <table>
+          <table id="OtherPets">
             <tr>
               <td><p>Number of Other Pets:</p></td>
               <td><p><%= @user.other_pet.number %></p></td>
             </tr>
             <tr>
               <td><p>Type of Other Pets:</p></td>
-              <td><p><%= @user.other_pet.animal_type %></p></td>
+              <td><p>
+                  <% if @user.other_pet.number != 0 %>
+                    <%= @user.other_pet.animal_type %>
+                  <%else%>
+                  n/a
+                  <%end%>
+                </p></td>
             </tr>
             <tr>
               <td><p>Vacinated:</p></td>
-              <td><p><%= @user.other_pet.vacinated %></p></td>
+              <td><p>
+                  <% if @user.other_pet.number != 0 %>
+                    <% if @user.other_pet.vacinated == true %>
+                      Yes
+                    <%else%>
+                      No
+                    <%end%>
+                  <%else%>
+                    n/a
+                  <%end%>
+                </p></td>
             </tr>
             <tr>
               <td><p>Spayed/Neutered:</p></td>
-              <td><p><%= @user.other_pet.fixed %></p></td>
+              <td><p>
+                  <% if @user.other_pet.number != 0 %>
+                    <% if @user.other_pet.fixed == true %>
+                      Yes
+                    <%else%>
+                      No
+                    <%end%>
+                  <%else%>
+                    n/a
+                  <%end%>
+                </p></td>
             </tr>
             <tr>
               <td><p>Ever Lost a Pet:</p></td>
-              <td><p><%= @user.other_pet.lost %></p></td>
+              <td><p>
+                  <% if @user.other_pet.number != 0 %>
+                    <% if @user.other_pet.lost == true %>
+                      Yes
+                    <%else%>
+                      No
+                    <%end%>
+                  <%else%>
+                    n/a
+                  <%end%>
+                </p></td>
             </tr>
             <tr>
               <td><p>Discipline Style:</p></td>
-              <td><p><%= @user.other_pet.discipline %></p></td>
+              <td><p>
+                <% if @user.other_pet.number != 0 %>
+                  <%= @user.other_pet.discipline %>
+                <%else%>
+                  n/a
+                <%end%>
+              </p></td>
             </tr>
           </table>
         <% else %>
-          <h1>No Other Pet Info</h1>
+          <h1>Please Add Other Pet Info</h1>
+          <form action="/user/<%= @user.id%>/pet" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <table id="OtherPets">
+              <tr>
+                <td><p>Number of Other Pets:</p></td>
+                <td><input type="number" name="number" placeholder="How Many?"></td>
+              </tr>
+              <tr>
+                <td><p>Type of Other Pets:</p></td>
+                <td><input type="text" name="type" placeholder="What type?"></td>
+              </tr>
+              <tr>
+                <td><p>Vacinated:</p></td>
+                <td>
+                  <select name="vacinated">
+                    <option value="">Select an Option</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Spayed/Neutered:</p></td>
+                <td>
+                  <select name="fixed">
+                    <option value="">Select an Option</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Ever Lost a Pet:</p></td>
+                <td>
+                  <select name="lost">
+                    <option value="">Select an Option</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Discipline Style:</p></td>
+                <td><input type="text" name="discipline" placeholder="Firm but loving"></td>
+              </tr>
+            </table>
+            <input type="submit" name="update">
+          </form>
         <% end %>
       </div>
       <div id="vet-info-box" class="rightbox">
@@ -178,70 +388,323 @@
             </tr>
           </table>
         <% else %>
-          <h1>No Other Vet Info</h1>
+          <h1>Enter Veterinarian Info</h1>
         <% end %>
       </div>
     </div>
   <% end %>
 </div>
 <script type="text/javascript">
-<% if @user %>
   $(document).ready(function() {
-    $("#user_contact").click(function(){
-      $(this).hide()
-      $('#UserContact').replaceWith(`
-        <form action="/user/<%= @user.id %>/contact" method="post">
-          <input type="hidden" name="_method" value="patch">
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <table id="UserContact">
+    $('#inithaveLL').change(function() {
+      if($('#inithaveLL').prop("checked")){
+        $('#InitLandlordQuestion').after(`
+          <tr class="inittoggle_switch">
+            <td>Landlord Name:</td>
+            <td><input type="text" name="landlord" placeholder="Mickey Mouse"</td>
+          </tr>
+          <tr class="inittoggle_switch">
+            <td>Landlord Phone: </td>
+            <td><input type="text" name="phone" placeholder="571-867-5309"</td>
+          </tr>
+        `);
+      }else{
+        $('.inittoggle_switch').remove()
+      };
+    });
+    $('#initAllergyCheck').change(function(){
+      if ($("#initAllergyCheck").prop("checked")){
+        $('#initAllergyField').attr("readonly", false)
+        $('#initAllergyField').attr("value", null)
+        $('#initAllergyField').attr("placeholder", "Pet Fur")
+        } else{
+          $('#initAllergyField').attr("readonly", true)
+          $('#initAllergyField').val("None")
+      };
+    });
+    <% if @user.user_contact%>
+      $("#user_contact").click(function(){
+        $(this).hide()
+        $('#UserContact').replaceWith(`
+          <form action="/user/<%= @user.id %>/contact" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <table id="UserContact">
+              <tr>
+                <td><p>First Name:</p></td>
+                <td><input type="text" name="first" value="<%= @user.user_contact.first%>"></td>
+              </tr>
+              <tr>
+                <td><p>Last Name:</p></td>
+                <td><input type="text" name="last" value="<%= @user.user_contact.last%>"></td>
+              </tr>
+              <tr>
+                <td><p>Occupation:</p></td>
+                <td><input type="text" name="occupation" value="<%= @user.user_contact.occupation%>"></td>
+              </tr>
+              <tr>
+                <td><p>Address:</p></td>
+                <td>
+                  <input type="text" name="address1" value="<%= @user.user_contact.address1%>">
+                  <% if @user.user_contact.address2 %>
+                    <input type="text" name="address2" value="<%= @user.user_contact.address2%>">
+                  <% end %>
+                  <p><input type="text" name="city" value="<%= @user.user_contact.city%>">, <input type="text" name="state" value="<%= @user.user_contact.state%>"> <input type="text" name="zip" value="<%= @user.user_contact.zip%>"></p>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Phone #:</p></td>
+                <td><input type="text" name="phone" value="<%= @user.user_contact.phone%>"></td>
+              </tr>
+              <tr>
+                <td><p>Email:</p></td>
+                <td><input type="text" name="email" value="<%= @user.user_contact.email%>"></td>
+              </tr>
+              <tr>
+                <td><p>Best time to contact:</p></td>
+                <td><input type="text" name="best_contact" value="<%= @user.user_contact.best_contact%>"></td>
+              </tr>
+            </table>
+            <input type="submit" name="Update" >
+          </form>
+          `)
+      });
+    <% end %>
+    <% if @user.family_info %>
+      $("#family_info").click(function(){
+        $(this).hide()
+        $('#FamilyInfo').replaceWith(`
+          <form action="/user/<%= @user.id %>/family" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <table id="FamilyInfo">
             <tr>
-              <td><p>First Name:</p></td>
-              <td><input type="text" name="first" value="<%= @user.user_contact.first%>"></td>
+              <td><p>Number of Adults:</p></td>
+              <td><input type="number" name="adults" value="<%= @user.family_info.adults %>"></td>
             </tr>
             <tr>
-              <td><p>Last Name:</p></td>
-              <td><input type="text" name="last" value="<%= @user.user_contact.last%>"></td>
+              <td><p>Number of Children:</p></td>
+              <td><input type="number" name="children" value="<%= @user.family_info.children %>"></td>
             </tr>
             <tr>
-              <td><p>Occupation:</p></td>
-              <td><input type="text" name="occupation" value="<%= @user.user_contact.occupation%>"></td>
-            </tr>
-            <tr>
-              <td><p>Address:</p></td>
+              <td><p>Type of Home:</p></td>
               <td>
-                <input type="text" name="address1" value="<%= @user.user_contact.address1%>">
-                <% if @user.user_contact.address2 %>
-                  <input type="text" name="address2" value="<%= @user.user_contact.address2%>">
-                <% end %>
-                <p><input type="text" name="city" value="<%= @user.user_contact.city%>">, <input type="text" name="state" value="<%= @user.user_contact.state%>"> <input type="text" name="zip" value="<%= @user.user_contact.zip%>"></p>
+                <select name="home_type">
+                  <% if @user.family_info.home_type == "House"%>
+                    <option value="House" selected>House</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Condo">Condo</option>
+                    <option value="Townhome">Townhome</option>
+                  <%elsif @user.family_info.home_type == "Apartment" %>
+                  <option value="House">House</option>
+                  <option value="Apartment" selected>Apartment</option>
+                  <option value="Condo">Condo</option>
+                  <option value="Townhome">Townhome</option>
+                  <%elsif @user.family_info.home_type == "Condo"%>
+                  <option value="House">House</option>
+                  <option value="Apartment">Apartment</option>
+                  <option value="Condo" selected>Condo</option>
+                  <option value="Townhome">Townhome</option>
+                  <%elsif @user.family_info.home_type == "Townhome"%>
+                  <option value="House">House</option>
+                  <option value="Apartment">Apartment</option>
+                  <option value="Condo">Condo</option>
+                  <option value="Townhome" selected>Townhome</option>
+                  <% else %>
+                    <option value="" select>Select a Home Type</option>
+                    <option value="House">House</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Condo">Condo</option>
+                    <option value="Townhome">Townhome</option>
+                  <%end%>
+                </select>
               </td>
             </tr>
             <tr>
-              <td><p>Phone #:</p></td>
-              <td><input type="text" name="phone" value="<%= @user.user_contact.phone%>"></td>
+              <td><p>Household Description:</p></td>
+              <td><input type="text" name="description" value="<%= @user.family_info.description %>"></td>
+            </tr>
+            <tr id="LandlordQuestion">
+              <td><p>Landlord?:</p></td>
+              <td>
+                <% if @user.family_info.landlord == "n/a" %>
+                  <input id="haveLL" type="checkbox" name="have_landlord" >
+              </td>
+            </tr>
+                <% else %>
+                  <input id="haveLL" type="checkbox" name="have_landlord" checked>
+              </td>
+            </tr>
+            <tr class="toggle_switch">
+              <td>Landlord Name:</td>
+              <td><input type="text" name="landlord" value="<%= @user.family_info.landlord %>"</td>
+            </tr>
+            <tr class="toggle_switch">
+              <td>Landlord Phone: </td>
+              <td><input type="text" name="phone" value="<%= @user.family_info.phone %>"</td>
+            </tr>
+            <% end %>
+            <tr>
+              <td><p>Animal Allergies?:</p></td>
+              <td>
+                <% if @user.family_info.allergies == "None" %>
+                  <input type="checkbox" id="allergyCheck" />
+                  <input id="allergyField" type="text" name="allergies" value="None" readonly>
+                <% else %>
+                  <input type="checkbox" id="allergyCheck" checked />
+                  <input id="allergyField" type="text" name="allergies" value="<%= @user.family_info.allergies %>">
+                <% end %>
+              </td>
             </tr>
             <tr>
-              <td><p>Email:</p></td>
-              <td><input type="text" name="email" value="<%= @user.user_contact.email%>"></td>
+              <td><p>Family in Agreement:</p></td>
+              <td>
+                <select name="agreement">
+                  <% if @user.family_info.agreement %>
+                    <option value="true" selected>Yes</option>
+                    <option value="false">No</option>
+                  <% else %>
+                    <option value="true">Yes</option>
+                    <option value="false" selected>No</option>
+                  <% end %>
+                </select>
+              </td>
             </tr>
             <tr>
-              <td><p>Best time to contact:</p></td>
-              <td><input type="text" name="best_contact" value="<%= @user.user_contact.best_contact%>"></td>
+              <td><p>Time for Animal:</p></td>
+              <td>
+                <select name="time">
+                  <% if @user.family_info.time %>
+                    <option value="true" selected>Yes</option>
+                    <option value="false">No</option>
+                  <% else %>
+                    <option value="true">Yes</option>
+                    <option value="false" selected>No</option>
+                  <% end %>
+                </select>
+              </td>
             </tr>
-          </table>
-          <input type="submit" name="Update" >
-        </form>
-        `)
-    });
-    $("#family_info").click(function(){
-      alert( "Family Info" );
-    });
-    $("#pet_info").click(function(){
-      alert( "Pet Info" );
-    });
-    $("#vet_info").click(function(){
-      alert( "Vet Info" );
-    });
+            </table>
+            <input type="submit" name="Update" >
+          </form>
+          `)
+      });
+      $(document).on( "change", '#haveLL',  function() {
+        if ($('#haveLL').prop( "checked" )){
+          if ('<%= @user.family_info.landlord %>' == 'n/a'){
+          $('#LandlordQuestion').after(`
+            <tr class="toggle_switch">
+              <td>Landlord Name:</td>
+              <td><input type="text" name="landlord" placeholder="Mickey Mouse"</td>
+            </tr>
+            <tr class="toggle_switch">
+              <td>Landlord Phone: </td>
+              <td><input type="text" name="phone" placeholder="571-867-5309"</td>
+            </tr>
+            `)
+          }else{
+            $('#LandlordQuestion').after(`
+              <tr class="toggle_switch">
+                <td>Landlord Name:</td>
+                <td><input type="text" name="landlord" value="<%= @user.family_info.landlord %>"</td>
+              </tr>
+              <tr class="toggle_switch">
+                <td>Landlord Phone: </td>
+                <td><input type="text" name="landlord" value="<%= @user.family_info.phone %>"</td>
+              </tr>
+              `)
+          }
+        }else{
+          $('.toggle_switch').remove()
+        }
+      });
+      $(document).on("change", "#allergyCheck", function(){
+        if ($("#allergyCheck").prop("checked")){
+          $('#allergyField').attr("readonly", false)
+          if (<%= @user.family_info.allergies != "None"%>){
+            $('#allergyField').val("<%= @user.family_info.allergies%>")
+          }else{
+            $('#allergyField').attr("value", null)
+            $('#allergyField').attr("placeholder", "Pet Fur")
+          }
+        } else{
+          $('#allergyField').attr("readonly", true)
+          $('#allergyField').attr("value", "None")
+        }
+      })
+    <% end %>
+    <% if @user.other_pet%>
+      $("#pet_info").click(function(){
+        $(this).hide()
+        $('#OtherPets').replaceWith(`
+          <form action="/user/<%= @user.id%>/pet" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <table id="OtherPets">
+              <tr>
+                <td><p>Number of Other Pets:</p></td>
+                <td><input type="number" name="number" value="<%= @user.other_pet.number %>"></td>
+              </tr>
+              <tr>
+                <td><p>Type of Other Pets:</p></td>
+                <td><input type="text" name="type" value="<%= @user.other_pet.animal_type %>"></td>
+              </tr>
+              <tr>
+                <td><p>Vacinated:</p></td>
+                <td>
+                  <select name="vacinated">
+                    <% if @user.other_pet.vacinated %>
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    <% else %>
+                      <option value="false">No</option>
+                      <option value="true">Yes</option>
+                    <% end %>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Spayed/Neutered:</p></td>
+                <td>
+                  <select name="fixed">
+                    <% if @user.other_pet.fixed %>
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    <% else %>
+                      <option value="false">No</option>
+                      <option value="true">Yes</option>
+                    <% end %>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Ever Lost a Pet:</p></td>
+                <td>
+                  <select name="lost">
+                    <% if @user.other_pet.lost %>
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    <% else %>
+                      <option value="false">No</option>
+                      <option value="true">Yes</option>
+                    <% end %>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Discipline Style:</p></td>
+                <td><input type="text" name="discipline" value="<%= @user.other_pet.discipline %>"></td>
+              </tr>
+            </table>
+            <input type="submit" name="update">
+          </form>
+          `)
+      });
+    <%end %>
+    <% if @user.vet %>
+      $("#vet_info").click(function(){
+        alert( "Vet Info" );
+      });
+    <% end %>
   });
-  <%end %>
 </script>

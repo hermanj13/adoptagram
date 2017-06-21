@@ -4,14 +4,13 @@ class UserController < ApplicationController
   end
 
   def show
-    ##add check for either user || agency with application pending#
     if session[:type] == "user" && current_user.id.to_s == params[:user_id] || session[:type] == "agency" && AdoptionApplication.where(agency_id: current_user.id, user_id: params[:user_id]).first || session[:type] == "agency" && FosterApplication.where(agency_id: current_user.id, user_id: params[:user_id]).first
       @user = User.find(params[:user_id])
     end
   end
 
   def create_contact
-    newContact = UserContact.new(user_id: current_user.id, first: params[:first], last: params[:last], occupation: params[:location], address1: params[:address1], address2: params[:address2], city: params[:city], state: params[:state], zip: params[:zip], phone: params[:phone], best_contact: params[:best_contact])
+    newContact = UserContact.new(user_id: current_user.id, first: params[:first], last: params[:last], occupation: params[:occupation], address1: params[:address1], address2: params[:address2], city: params[:city], state: params[:state], zip: params[:zip], phone: params[:phone], email: params[:email], best_contact: params[:best_contact])
     if newContact.save
       redirect_to "/user/#{current_user.id}"
     else
@@ -31,7 +30,7 @@ class UserController < ApplicationController
   end
 
   def create_pet
-    newPet = OtherPet.new(user_id: current_user.id, number: params[:number], type: params[:type], vacinated: params[:vacinated], fixed: params[:fixed], lost: params[:lost], discipline: params[:discipline])
+    newPet = OtherPet.new(user_id: current_user.id, number: params[:number], animal_type: params[:type], vacinated: params[:vacinated], fixed: params[:fixed], lost: params[:lost], discipline: params[:discipline])
     if newPet.save
       redirect_to "/user/#{current_user.id}"
     else
@@ -51,7 +50,6 @@ class UserController < ApplicationController
   end
 
   def update_contact
-    puts('im here')
     updateContact = UserContact.find_by(user_id: current_user.id)
     if updateContact.update(first: params[:first], last: params[:last], occupation: params[:occupation], address1: params[:address1], address2: params[:address2], city: params[:city], state: params[:state], zip: params[:zip], phone: params[:phone], email: params[:email], best_contact: params[:best_contact])
       redirect_to "/user/#{current_user.id}"
@@ -62,7 +60,7 @@ class UserController < ApplicationController
   end
 
   def update_family
-    updateFamily = FamilyInfo.where(user_id: current_user.id)
+    updateFamily = FamilyInfo.find_by(user_id: current_user.id)
     if updateFamily.update(adults: params[:adults], children: params[:children], home_type: params[:home_type], description: params[:description], landlord: params[:landlord], phone: params[:phone], allergies: params[:allergies], agreement: params[:agreement], time: params[:time])
       redirect_to "/user/#{current_user.id}"
     else
@@ -72,8 +70,8 @@ class UserController < ApplicationController
   end
 
   def update_pet
-    updatePet = OtherPet.where(user_id: current_user.id)
-    if updatePet.update(number: params[:number], type: params[:type], vacinated: params[:vacinated], fixed: params[:fixed], lost: params[:lost], discipline: params[:discipline])
+    updatePet = OtherPet.find_by(user_id: current_user.id)
+    if updatePet.update(number: params[:number], animal_type: params[:type], vacinated: params[:vacinated], fixed: params[:fixed], lost: params[:lost], discipline: params[:discipline])
       redirect_to "/user/#{current_user.id}"
     else
       flash[:notice] = updatePet.errors.full_messages
@@ -82,7 +80,7 @@ class UserController < ApplicationController
   end
 
   def update_vet
-    updateVet = Vet.where(user_id: current_user.id)
+    updateVet = Vet.find_by(user_id: current_user.id)
     if updateVet.update(have: params[:have], name: params[:name], clinic: params[:clinic], phone: params[:phone])
       redirect_to "/user/#{current_user.id}"
     else

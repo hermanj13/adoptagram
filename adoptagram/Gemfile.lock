@@ -109,6 +109,8 @@ GEM
     pg (0.20.0)
     powerpack (0.1.1)
     public_suffix (2.0.5)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.6.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -220,6 +222,7 @@ DEPENDENCIES
   jquery-rails
   paperclip (~> 5.0.0)
   pg (~> 0.15)
+  quiet_assets
   rails (= 4.2.7)
   rspec-rails
   rubocop
