@@ -32,8 +32,12 @@ class UserController < ApplicationController
   def create_pet
     newPet = OtherPet.new(user_id: current_user.id, number: params[:number], animal_type: params[:type], vacinated: params[:vacinated], fixed: params[:fixed], lost: params[:lost], discipline: params[:discipline])
     if newPet.save
+      puts 'saved'
       redirect_to "/user/#{current_user.id}"
     else
+      puts newPet.errors
+      puts newPet
+      puts 'fail'
       flash[:notice] = newPet.errors.full_messages
       redirect_to "/user/#{current_user.id}"
     end
@@ -72,8 +76,11 @@ class UserController < ApplicationController
   def update_pet
     updatePet = OtherPet.find_by(user_id: current_user.id)
     if updatePet.update(number: params[:number], animal_type: params[:type], vacinated: params[:vacinated], fixed: params[:fixed], lost: params[:lost], discipline: params[:discipline])
+      puts 'saved'
       redirect_to "/user/#{current_user.id}"
     else
+      puts updatePet.errors.full_messages
+      puts 'fail'
       flash[:notice] = updatePet.errors.full_messages
       redirect_to "/user/#{current_user.id}"
     end

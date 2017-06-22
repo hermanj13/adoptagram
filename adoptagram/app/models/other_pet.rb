@@ -10,8 +10,7 @@ class OtherPet < ActiveRecord::Base
         self.animal_type = 'n/a'
         self.vacinated = false
         self.fixed = false
-        self.lost = false
-        self.discipline = 'n/a'
+        self.discipline ||= "n/a"
       end
     end
 end

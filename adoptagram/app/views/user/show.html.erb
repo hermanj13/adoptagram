@@ -271,26 +271,16 @@
             <tr>
               <td><p>Ever Lost a Pet:</p></td>
               <td><p>
-                  <% if @user.other_pet.number != 0 %>
-                    <% if @user.other_pet.lost == true %>
-                      Yes
-                    <%else%>
-                      No
-                    <%end%>
-                  <%else%>
-                    n/a
-                  <%end%>
-                </p></td>
+                <% if @user.other_pet.lost == true %>
+                  Yes
+                <%else%>
+                  No
+                <%end%>
+              </p></td>
             </tr>
             <tr>
               <td><p>Discipline Style:</p></td>
-              <td><p>
-                <% if @user.other_pet.number != 0 %>
-                  <%= @user.other_pet.discipline %>
-                <%else%>
-                  n/a
-                <%end%>
-              </p></td>
+              <td><p><%= @user.other_pet.discipline %></p></td>
             </tr>
           </table>
         <% else %>
@@ -298,15 +288,11 @@
           <form action="/user/<%= @user.id%>/pet" method="post">
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <table id="OtherPets">
-              <tr>
+              <tr id="otherPetsInsertAfter">
                 <td><p>Number of Other Pets:</p></td>
-                <td><input type="number" name="number" placeholder="How Many?"></td>
+                <td><input id="petNumber" type="number" name="number" min=0 placeholder="How Many?"></td>
               </tr>
-              <tr>
-                <td><p>Type of Other Pets:</p></td>
-                <td><input type="text" name="type" placeholder="What type?"></td>
-              </tr>
-              <tr>
+              <tr class="hiddenRow" hidden>
                 <td><p>Vacinated:</p></td>
                 <td>
                   <select name="vacinated">
@@ -316,7 +302,7 @@
                   </select>
                 </td>
               </tr>
-              <tr>
+              <tr class="hiddenRow" hidden>
                 <td><p>Spayed/Neutered:</p></td>
                 <td>
                   <select name="fixed">
@@ -421,6 +407,32 @@
           $('#initAllergyField').attr("readonly", true)
           $('#initAllergyField').val("None")
       };
+    });
+    $("#petNumber").on('input', function() {
+      $(this).data("old", $(this).data("new") || 0);
+      $(this).data("new", $(this).val());
+      var diff = $(this).data("new") - $(this).data("old");
+      var num = this.value;
+      if (num == 0) {
+        $(".hiddenRow").each(function(){
+        	$(this).hide()
+        });
+      };
+      if (diff < 0) {
+        for (let i = 0; i < Math.abs(diff); i++) {
+          $('.otherPetsAddedRow:last').remove();
+        };
+      };
+      if (diff > 0) {
+        for (let i = 0; i < diff; i++) {
+          $("#otherPetsInsertAfter").after("<tr class='otherPetsAddedRow'><td><p>Type of Other Pets:</p></td><td><input type='text' name='type' placeholder='What type?'></td></tr>");
+        };
+      };
+      if(num != 0){
+      	$(".hiddenRow").each(function(){
+        	$(this).show()
+      	});
+      }
     });
     <% if @user.user_contact%>
       $("#user_contact").click(function(){
@@ -634,72 +646,133 @@
       })
     <% end %>
     <% if @user.other_pet%>
-      $("#pet_info").click(function(){
-        $(this).hide()
-        $('#OtherPets').replaceWith(`
-          <form action="/user/<%= @user.id%>/pet" method="post">
-            <input type="hidden" name="_method" value="patch">
-            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <table id="OtherPets">
-              <tr>
-                <td><p>Number of Other Pets:</p></td>
-                <td><input type="number" name="number" value="<%= @user.other_pet.number %>"></td>
-              </tr>
-              <tr>
-                <td><p>Type of Other Pets:</p></td>
-                <td><input type="text" name="type" value="<%= @user.other_pet.animal_type %>"></td>
-              </tr>
-              <tr>
-                <td><p>Vacinated:</p></td>
-                <td>
-                  <select name="vacinated">
-                    <% if @user.other_pet.vacinated %>
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
-                    <% else %>
-                      <option value="false">No</option>
-                      <option value="true">Yes</option>
-                    <% end %>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td><p>Spayed/Neutered:</p></td>
-                <td>
-                  <select name="fixed">
-                    <% if @user.other_pet.fixed %>
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
-                    <% else %>
-                      <option value="false">No</option>
-                      <option value="true">Yes</option>
-                    <% end %>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td><p>Ever Lost a Pet:</p></td>
-                <td>
-                  <select name="lost">
-                    <% if @user.other_pet.lost %>
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
-                    <% else %>
-                      <option value="false">No</option>
-                      <option value="true">Yes</option>
-                    <% end %>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td><p>Discipline Style:</p></td>
-                <td><input type="text" name="discipline" value="<%= @user.other_pet.discipline %>"></td>
-              </tr>
-            </table>
-            <input type="submit" name="update">
-          </form>
-          `)
+    $(document).on("click", '#pet_info', function() {
+      $(this).hide()
+      var str = "<%= @user.other_pet.animal_type %>";
+      var str = str.split(" ");
+      $('#OtherPets').replaceWith(`
+              <form action="/user/<%= @user.id%>/pet" method="post">
+                <input type="hidden" name="_method" value="patch">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <table id="OtherPets">
+                  <tr id="otherPetsInsertAfter">
+                    <td><p>Number of Other Pets:</p></td>
+                    <td><input id="petNumber" type="number" name="number" min=0></td>
+                  </tr>
+                  <tr hidden>
+                    <td><p>Pet Type Hidden Input:</p></td>
+                    <td><input id="petTypeInput" type="text" name="type"></td>
+                  </tr>
+                  <tr class="hiddenRow">
+                    <td><p>Vacinated:</p></td>
+                    <td>
+                      <select name="vacinated">
+                        <% if @user.other_pet.vacinated %>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        <% else %>
+                          <option value="false">No</option>
+                          <option value="true">Yes</option>
+                        <% end %>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr class="hiddenRow">
+                    <td><p>Spayed/Neutered:</p></td>
+                    <td>
+                      <select name="fixed">
+                        <% if @user.other_pet.fixed %>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        <% else %>
+                          <option value="false">No</option>
+                          <option value="true">Yes</option>
+                        <% end %>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><p>Ever Lost a Pet:</p></td>
+                    <td>
+                      <select name="lost">
+                        <% if @user.other_pet.lost %>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        <% else %>
+                          <option value="false">No</option>
+                          <option value="true">Yes</option>
+                        <% end %>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><p>Discipline Style:</p></td>
+                    <td><input type="text" name="discipline" value="<%= @user.other_pet.discipline %>"></td>
+                  </tr>
+                </table>
+                <input type="submit" name="update">
+              </form>
+              `)
+      var petCheck = function() {
+        var str = "<%= @user.other_pet.animal_type %>";
+        var str = str.split("/");
+        console.log(str);
+        $("#petNumber").val(str.length)
+        var num = $("#petNumber").val()
+        if (num == 0) {
+          $(".hiddenRow").each(function() {
+            $(this).hide();
+          });
+        } else{
+          for (let i = 0; i < num; i++){
+            if($("tr").hasClass("otherPetsAddedRow")){
+              $(".otherPetsAddedRow:last").after("<tr class='otherPetsAddedRow'><td><p>Type of Other Pets:</p></td><td><input type='text' class='typeMultiInput' placeholder='What type?' value='" + str[i] + "'></td></tr>");
+            } else{
+              $("#otherPetsInsertAfter").after("<tr class='otherPetsAddedRow'><td><p>Type of Other Pets:</p></td><td><input type='text' class='typeMultiInput' placeholder='What type?' value='" + str[i] + "'></td></tr>");
+            }
+          }
+        };
+      }();
+      $("#petNumber").on('input', function() {
+        $(this).data("old", $(this).data("new") || str.length);
+        $(this).data("new", $(this).val());
+        var diff = $(this).data("new") - $(this).data("old");
+        var num = this.value;
+        if (num == 0) {
+          $(".hiddenRow").each(function(){
+            $('.otherPetsAddedRow:last').remove();
+          	$(this).hide()
+          });
+        };
+        if (diff < 0) {
+          for (let i = 0; i < Math.abs(diff); i++) {
+            $('.otherPetsAddedRow:last').remove();
+          };
+        };
+        if (diff > 0) {
+          for (let i = 0; i < diff; i++) {
+            if($("tr").hasClass("otherPetsAddedRow")){
+              $(".otherPetsAddedRow:last").after("<tr class='otherPetsAddedRow'><td><p>Type of Other Pets:</p></td><td><input type='text' class='typeMultiInput' placeholder='What type?'></td></tr>");
+            } else{
+              $("#otherPetsInsertAfter").after("<tr class='otherPetsAddedRow'><td><p>Type of Other Pets:</p></td><td><input type='text' class='typeMultiInput' placeholder='What type?'></td></tr>");
+            }
+          };
+        };
+        if(num != 0){
+        	$(".hiddenRow").each(function(){
+          	$(this).show()
+        	});
+        }
       });
+      $(":submit").click(function(){
+        newArr = []
+        $(".typeMultiInput").each(function(){
+          newArr[newArr.length] = $(this).val()
+        });
+        submitedType = newArr.join('/')
+        $("#petTypeInput").val(submitedType)
+      });
+    });
     <%end %>
     <% if @user.vet %>
       $("#vet_info").click(function(){
