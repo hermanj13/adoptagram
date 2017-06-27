@@ -668,11 +668,11 @@
                     <td>
                       <select name="vacinated">
                         <% if @user.other_pet.vacinated %>
-                          <option value="true">Yes</option>
+                          <option value="true" selected>Yes</option>
                           <option value="false">No</option>
                         <% else %>
-                          <option value="false">No</option>
                           <option value="true">Yes</option>
+                          <option value="false" selected>No</option>
                         <% end %>
                       </select>
                     </td>
@@ -682,11 +682,11 @@
                     <td>
                       <select name="fixed">
                         <% if @user.other_pet.fixed %>
-                          <option value="true">Yes</option>
+                          <option value="true" selected>Yes</option>
                           <option value="false">No</option>
                         <% else %>
-                          <option value="false">No</option>
                           <option value="true">Yes</option>
+                          <option value="false" selected>No</option>
                         <% end %>
                       </select>
                     </td>
@@ -696,11 +696,11 @@
                     <td>
                       <select name="lost">
                         <% if @user.other_pet.lost %>
-                          <option value="true">Yes</option>
+                          <option value="true" selected>Yes</option>
                           <option value="false">No</option>
                         <% else %>
-                          <option value="false">No</option>
                           <option value="true">Yes</option>
+                          <option value="false" selected>No</option>
                         <% end %>
                       </select>
                     </td>
@@ -714,11 +714,15 @@
               </form>
               `)
       var petCheck = function() {
-        var str = "<%= @user.other_pet.animal_type %>";
-        var str = str.split("/");
-        console.log(str);
-        $("#petNumber").val(str.length)
-        var num = $("#petNumber").val()
+        if("<%= @user.other_pet.animal_type %>" == "n/a"){
+          num = 0
+        } else{
+          var str = "<%= @user.other_pet.animal_type %>";
+          var str = str.split("/");
+          num = str.length
+        }
+        $("#petNumber").val(num)
+        $("#petNumber").data("new", num);
         if (num == 0) {
           $(".hiddenRow").each(function() {
             $(this).hide();
@@ -734,7 +738,7 @@
         };
       }();
       $("#petNumber").on('input', function() {
-        $(this).data("old", $(this).data("new") || str.length);
+        $(this).data("old", $(this).data("new") || 0);
         $(this).data("new", $(this).val());
         var diff = $(this).data("new") - $(this).data("old");
         var num = this.value;
